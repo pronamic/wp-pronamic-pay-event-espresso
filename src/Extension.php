@@ -24,11 +24,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	 * @return boolean
 	 */
 	public static function is_active() {
-		return
-			defined( 'EVENT_ESPRESSO_VERSION' )
-				&&
-			version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' )
-		;
+		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
 	}
 
 	//////////////////////////////////////////////////
