@@ -24,6 +24,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	 * @return boolean
 	 */
 	public static function is_active() {
+		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
 		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
 	}
 
@@ -44,21 +45,27 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	 * Initialize Event Espresso gateways
 	 */
 	public static function init_gateways() {
-		class_alias( 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway', 'EE_pronamic_pay_ideal' );
+		$gateways = array(
+			'pronamic_pay_ideal' => 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway',
+		);
 
-		// Fix fatal error since Event Espresso 3.1.29.1.P
-		if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
-			$gateway   = 'pronamic_pay_ideal';
-			$classname = 'EE_' . $gateway;
+		foreach ( $gateways as $gateway ) {
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L217
+			$class_name = 'EE_' . $gateway;
 
-			$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
-			$gateway_class = $gateway_dir . '/' . $classname . '.class.php';
+			class_alias( 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway', $class_name );
 
-			if ( ! is_readable( $gateway_class ) ) {
-				$created = wp_mkdir_p( $gateway_dir );
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L198-L201
+			if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
+				$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
+				$gateway_class = $gateway_dir . '/' . $class_name . '.class.php';
 
-				if ( $created ) {
-					touch( $gateway_class );
+				if ( ! is_readable( $gateway_class ) ) {
+					$created = wp_mkdir_p( $gateway_dir );
+
+					if ( $created ) {
+						touch( $gateway_class );
+					}
 				}
 			}
 		}
