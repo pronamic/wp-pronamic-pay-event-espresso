@@ -152,24 +152,23 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 
 	/**
 	 * Get normal return URL
-	 * @see https://github.com/woothemes/woocommerce/blob/v2.1.3/includes/abstracts/abstract-wc-payment-gateway.php#L52
 	 *
 	 * @see Pronamic_Pay_PaymentDataInterface::get_normal_return_url()
 	 * @return string
 	 */
 	public function get_normal_return_url() {
-		return $this->gateway->_get_return_url( $this->primary_registrant );
+		return null;
 	}
 
 	public function get_cancel_url() {
-		return $this->gateway->_get_cancel_url();
+		return null;
 	}
 
 	public function get_success_url() {
-		return $this->get_normal_return_url();
+		return null;
 	}
 
 	public function get_error_url() {
-		return $this->get_normal_return_url();
+		return null;
 	}
 }

@@ -38,7 +38,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	public function __construct( EEM_Gateways $model ) {
 		$this->_gateway_name = 'pronamic_pay_ideal';
 		$this->_path         = str_replace( '\\', '/', __FILE__ );
-		$this->_btn_img      = plugins_url( 'images/icon-24x24.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
 
 
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Offsite_Gateway.class.php#L4
@@ -58,7 +58,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 */
 	protected function _default_settings() {
 		$this->_payment_settings['display_name'] = __( 'iDEAL', 'pronamic_ideal' );
-		$this->_payment_settings['button_url']   = plugins_url( 'images/icon-24x24.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_payment_settings['button_url']   = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
 		$this->_payment_settings['current_path'] = '';
 	}
 
@@ -165,5 +165,42 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 				$this->redirect_after_reg_step_3();
 			}
 		}
+	}
+
+	/**
+	 * Handle IPN for transaction
+	 */
+	public function handle_ipn_for_transaction( EE_Transaction $transaction ) {
+		global $pronamic_payment, $pronamic_url;
+
+		// Transaction ID
+	    $transaction_id = $transaction->ID();
+
+	    // Payment
+	    $payment = $this->_PAY->get_payment_by_txn_id_chq_nmbr( $transaction_id );
+
+	    if ( empty( $payment ) ) {
+			$payment = EE_Payment::new_instance( array(
+				'TXN_ID'              => $transaction_id, 
+				'STS_ID'              => EEM_Payment::status_id_approved, 
+				'PAY_timestamp'       => $transaction->datetime(), 
+				'PAY_amount'          => $pronamic_payment->amount,
+				'PAY_gateway'         => __( 'iDEAL', 'pronamic_ideal' ),
+				'PAY_txn_id_chq_nmbr' => $transaction_id, 
+			) );
+	    } else {
+			$payment->set_status( EEM_Payment::status_id_approved );
+	    }
+
+	    // Save
+		$payment->save();
+
+		// URL
+		$registration = $transaction->primary_registration();
+
+		$pronamic_url = $this->_get_return_url( $registration );
+
+		// Return
+		return $this->update_transaction_with_payment( $transaction, $payment );	
 	}
 }
