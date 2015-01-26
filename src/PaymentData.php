@@ -131,7 +131,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	}
 
 	public function getCustomerName() {
-		return $primary_attendee->fname() . ' ' . $primary_attendee->lname();
+		return $this->primary_attendee->fname() . ' ' . $this->primary_attendee->lname();
 	}
 
 	public function getOwnerAddress() {
