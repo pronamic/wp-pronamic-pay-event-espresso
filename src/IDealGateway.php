@@ -3,10 +3,10 @@
 /**
  * Title: WordPress pay Event Espresso iDEAL gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2014
+ * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
- * @version 1.0.0
+ * @version 1.0.1
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_Gateway {
 	/**
@@ -39,7 +39,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		$this->_gateway_name = 'pronamic_pay_ideal';
 		$this->_path         = str_replace( '\\', '/', __FILE__ );
 		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
-
 
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Offsite_Gateway.class.php#L4
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L26
@@ -181,12 +180,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 	    if ( empty( $payment ) ) {
 			$payment = EE_Payment::new_instance( array(
-				'TXN_ID'              => $transaction_id, 
-				'STS_ID'              => EEM_Payment::status_id_approved, 
-				'PAY_timestamp'       => $transaction->datetime(), 
+				'TXN_ID'              => $transaction_id,
+				'STS_ID'              => EEM_Payment::status_id_approved,
+				'PAY_timestamp'       => $transaction->datetime(),
 				'PAY_amount'          => $pronamic_payment->amount,
 				'PAY_gateway'         => __( 'iDEAL', 'pronamic_ideal' ),
-				'PAY_txn_id_chq_nmbr' => $transaction_id, 
+				'PAY_txn_id_chq_nmbr' => $transaction_id,
 			) );
 	    } else {
 			$payment->set_status( EEM_Payment::status_id_approved );
@@ -201,6 +200,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		$pronamic_url = $this->_get_return_url( $registration );
 
 		// Return
-		return $this->update_transaction_with_payment( $transaction, $payment );	
+		return $this->update_transaction_with_payment( $transaction, $payment );
 	}
 }
