@@ -6,7 +6,7 @@
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
- * @version 1.0.1
+ * @version 1.0.2
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	/**
@@ -50,26 +50,28 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	 * Initialize Event Espresso gateways
 	 */
 	public static function init_gateways() {
-		$gateways = array(
-			'pronamic_pay_ideal' => 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway',
-		);
+		if ( class_exists( 'EE_Offsite_Gateway' ) ) {
+			$gateways = array(
+				'pronamic_pay_ideal' => 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway',
+			);
 
-		foreach ( $gateways as $gateway => $alias ) {
-			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L217
-			$class_name = 'EE_' . $gateway;
+			foreach ( $gateways as $gateway => $alias ) {
+				// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L217
+				$class_name = 'EE_' . $gateway;
 
-			class_alias( $alias, $class_name );
+				class_alias( $alias, $class_name );
 
-			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L198-L201
-			if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
-				$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
-				$gateway_class = $gateway_dir . '/' . $class_name . '.class.php';
+				// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L198-L201
+				if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
+					$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
+					$gateway_class = $gateway_dir . '/' . $class_name . '.class.php';
 
-				if ( ! is_readable( $gateway_class ) ) {
-					$created = wp_mkdir_p( $gateway_dir );
+					if ( ! is_readable( $gateway_class ) ) {
+						$created = wp_mkdir_p( $gateway_dir );
 
-					if ( $created ) {
-						touch( $gateway_class );
+						if ( $created ) {
+							touch( $gateway_class );
+						}
 					}
 				}
 			}
