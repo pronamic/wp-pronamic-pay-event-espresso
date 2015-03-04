@@ -109,10 +109,18 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		echo $this->_generate_payment_gateway_selection_button();
 
+		$config_id = $this->_payment_settings['config_id'];
+
+		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+
 		?>
 		<div id="reg-page-billing-info-<?php echo $this->_gateway_name; ?>-dv" class="reg-page-billing-info-dv <?php echo $this->_css_class; ?>">
 			<h3><?php _e( 'You have selected "iDEAL" as your method of payment', 'pronamic_ideal' ); ?></h3>
 			<p><?php _e( 'After finalizing your registration, you will be transferred to iDEAL where your payment will be securely processed.', 'pronamic_ideal' ); ?></p>
+
+			<?php
+			echo $gateway->get_input_html();
+			?>
 		</div>
 		<?php
 	}
