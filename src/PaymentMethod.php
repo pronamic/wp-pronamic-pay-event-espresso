@@ -20,8 +20,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	 * @param EE_Payment_Method $pm_instance
 	 */
 	public function __construct( $pm_instance = null ) {
-		require_once 'Gateway.php';
-
 		$this->_gateway     = new Pronamic_WP_Pay_Extensions_EventEspresso_Gateway();
 		$this->_pretty_name = __( 'Pronamic', 'pronamic_ideal' );
 
