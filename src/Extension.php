@@ -135,39 +135,42 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		$url_cancel  = get_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', true );
 		$url_error   = get_post_meta( $payment->get_id(), '_pronamic_payment_url_error', true );
 
-		// 
+		$url    = $url_return;
+		$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::PENDING;
+
+		// Status
 		switch ( $payment->get_status() ) {
 			case Pronamic_WP_Pay_Statuses::CANCELLED :
-				$url = $url_cancel;
+				$url    = $url_cancel;
+				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::CANCELLED;
 
 				break;
 			case Pronamic_WP_Pay_Statuses::EXPIRED :
-				$url = $url_error;
+				$url    = $url_error;
+				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
 
 				break;
 			case Pronamic_WP_Pay_Statuses::FAILURE :
-				$url = $url_error;
+				$url    = $url_error;
+				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
 
 				break;
 			case Pronamic_WP_Pay_Statuses::SUCCESS :
-				// Get transaction
-				$transaction_model = EEM_Transaction::instance();
-
-				$transaction = $transaction_model->get_one_by_ID( $payment->get_source_id() );
-
-				// Finalize payment
-				$payment_processor = EE_Registry::instance()->load_core( 'Payment_Processor' );
-
-				$ee_payment = $payment_processor->finalize_payment_for( $transaction, true );
-
-				$url = $url_success;
+				$url    = $url_success;
+				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::APPROVED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::OPEN :
-			default:
-				$url = $url_return;
+		}
 
-				break;
+		// Transaction
+		$ee_transaction = EEM_Transaction::instance()->get_one_by_ID( $payment->get_source_id() );
+
+		if ( $ee_transaction ) {
+			$ee_payment = $ee_transaction->last_payment();
+
+			if ( $ee_payment ) {
+				$ee_payment->set_status( $status );
+			}
 		}
 
 		// Redirect
