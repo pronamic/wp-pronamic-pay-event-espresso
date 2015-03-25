@@ -13,7 +13,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 	/**
 	 * Configuration ID
 	 *
-	 * Extra meta inputs on payment method settings forms are magically loaded 
+	 * Extra meta inputs on payment method settings forms are magically loaded
 	 * into class variables like this one ($_config_id).
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L181-L183
@@ -69,7 +69,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 			}
 		}
 
-		return $fields;			
+		return $fields;
 	}
 
 	//////////////////////////////////////////////////
