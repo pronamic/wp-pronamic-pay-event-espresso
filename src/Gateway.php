@@ -104,6 +104,11 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 					die( $message );
 				}
 			} else {
+				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_return', $return_url );
+				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_success', $return_url );
+				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
+				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
+
 				$args = $this->get_fields_from_html( $pronamic_gateway->get_output_html() );
 
 				$ee_payment->set_redirect_url( $pronamic_payment->get_action_url() );
