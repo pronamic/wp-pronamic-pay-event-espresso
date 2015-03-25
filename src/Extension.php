@@ -167,10 +167,10 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 
 		if ( $ee_transaction ) {
 			$ee_payment = $ee_transaction->last_payment();
+			$ee_payment->set_status( $status );
 
-			if ( $ee_payment ) {
-				$ee_payment->set_status( $status );
-			}
+			$payment_processor = EE_Registry::instance()->load_core( 'Payment_Processor' );
+			$payment_processor->finalize_payment_for( $ee_transaction, true );
 		}
 
 		// Redirect
