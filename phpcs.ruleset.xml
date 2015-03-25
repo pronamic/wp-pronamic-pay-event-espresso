@@ -5,4 +5,8 @@
 
 		<exclude name="WordPress.XSS.EscapeOutput" />
 	</rule>
+
+	<rule ref="WordPress.Files.FileName.UnderscoresNotAllowed">
+		<exclude-pattern>/src/ee/*</exclude-pattern>
+	</rule>
 </ruleset>
