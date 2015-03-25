@@ -15,33 +15,33 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses {
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L19-L22
 	 */
-	APPROVED = 'PAP';
+	const APPROVED = 'PAP';
 
 	/**
 	 * Pending
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L25-L28
 	 */
-	PENDING = 'PPN';
+	const PENDING = 'PPN';
 
 	/**
 	 * Cancelled
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L31-L35
 	 */
-	CANCELLED = 'PCN';
+	const CANCELLED = 'PCN';
 
 	/**
 	 * Declined
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L39-L43
 	 */
-	DECLINED = 'PDC';
+	const DECLINED = 'PDC';
 
 	/**
 	 * Failed
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L47-L51
 	 */
-	FAILED = 'PFL';
+	const FAILED = 'PFL';
 }
