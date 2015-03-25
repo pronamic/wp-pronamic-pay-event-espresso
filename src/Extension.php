@@ -6,14 +6,25 @@
  * Copyright: Copyright (c) 2005 - 2015
  * Company: Pronamic
  * @author Remco Tolsma
- * @version 1.0.2
+ * @version 1.1.0
+ * @since 1.0.2
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	/**
 	 * Bootstrap
 	 */
 	public static function bootstrap() {
-		add_action( 'plugins_loaded', array( __CLASS__, 'plugins_loaded' ) );
+		new self();
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Constructs and initalize an Event Espresso extension
+	 */
+	public function __construct() {
+		// Actions
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
 	}
 
 	//////////////////////////////////////////////////
@@ -33,9 +44,13 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	/**
 	 * Plugins loaded
 	 */
-	public static function plugins_loaded() {
-		if ( self::is_active() ) {
-			self::init_gateways();
+	public function plugins_loaded() {
+		if ( defined( 'EVENT_ESPRESSO_VERSION' ) ) {
+			if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '>=' ) ) {
+				$this->init_ee4dot6plus();
+			} elseif ( version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' ) && version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) {
+				$this->init_ee4_to_ee4dot6();
+			}
 
 			// Actions
 			add_filter( 'pronamic_payment_source_text_eventespresso',   array( __CLASS__, 'source_text' ), 10, 2 );
@@ -47,9 +62,35 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	//////////////////////////////////////////////////
 
 	/**
-	 * Initialize Event Espresso gateways
+	 * Initialize Event Espresso 4.6+
 	 */
-	public static function init_gateways() {
+	private function init_ee4dot6plus() {
+		// Actions
+		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'load_espresso_addons' ) );
+	}
+
+	/**
+	 * Load Espresso addons
+	 *
+	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L162-L163
+	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L383-L398
+	 */
+	public function load_espresso_addons() {
+		if ( class_exists( 'EE_Addon' ) ) {
+			/*
+			 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
+			 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
+			 */
+			Pronamic_WP_Pay_Extensions_EventEspresso_AddOn::register_addon();
+		}
+	}
+
+	//////////////////////////////////////////////////
+
+	/**
+	 * Initialize Event Espresso > 4.0 < 4.6
+	 */
+	private function init_ee4_to_ee4dot6() {
 		if ( class_exists( 'EE_Offsite_Gateway' ) ) {
 			$gateways = array(
 				'pronamic_pay_ideal' => 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway',
