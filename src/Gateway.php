@@ -36,44 +36,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 
 	//////////////////////////////////////////////////
 
-	private function get_fields_from_html( $html ) {
-		$fields = array();
-
-		$extracted_fields = explode( '<input ', $html );
-
-		foreach ( $extracted_fields as $field ) {
-			preg_match_all( '#([a-z]+=".*?")#i', $field, $inputs );
-
-			foreach ( $inputs[0] as $match ) {
-				list( $key, $value ) = explode( '="', $match );
-
-				// Remove start and end quotes
-				$value = substr( $value, 0, -1 );
-
-				switch ( strtolower( $key ) ) {
-					case 'name':
-						$name = $value;
-						break;
-
-					case 'value':
-						$input_value = $value;
-						break;
-				}
-			}
-
-			if ( isset( $name ) && isset( $input_value ) ) {
-				$fields[ $name ] = $input_value;
-
-				unset( $name );
-				unset( $input_value );
-			}
-		}
-
-		return $fields;
-	}
-
-	//////////////////////////////////////////////////
-
 	/**
 	 * Set redirection info
 	 *
@@ -109,10 +71,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
-				$args = $this->get_fields_from_html( $pronamic_gateway->get_output_html() );
-
 				$ee_payment->set_redirect_url( $pronamic_payment->get_action_url() );
-				$ee_payment->set_redirect_args( $args );
+				$ee_payment->set_redirect_args( $pronamic_gateway->get_output_fields() );
 			}
 		}
 
