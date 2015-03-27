@@ -71,15 +71,24 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
-				$args = $pronamic_gateway->get_output_fields();
+				$redirect_url  = $pronamic_payment->get_action_url();
+				$redirect_args = $pronamic_gateway->get_output_fields();
 
-				// Force Event Espresso to use the form method POST for action URLs with parameters
-				if( $pronamic_gateway->is_http_redirect() ) {
-					$args['pronamic_payment'] = true;
+				/*
+				 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
+				 * we have to make sure an POST method is used when the redirect URL has query arguments.
+				 * Otheriwse the URL query arguments will be stripped by the users webbrowser. 
+				 * Herefor we have to make sure the redirect arguments array is not empty.
+				 *
+				 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547
+				 * @see http://stackoverflow.com/q/1116019
+				 */
+				if ( false !== strpos( $redirect_url, '?' ) && empty( $redirect_args ) ) {
+					$redirect_args[] = '';
 				}
 
-				$ee_payment->set_redirect_url( $pronamic_payment->get_action_url() );
-				$ee_payment->set_redirect_args( $args );
+				$ee_payment->set_redirect_url( $redirect_url );
+				$ee_payment->set_redirect_args( $redirect_args );
 			}
 		}
 
