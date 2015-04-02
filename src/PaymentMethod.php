@@ -35,17 +35,21 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
 
-		$form = new EE_Billing_Info_Form(
-			$this->_pm_instance,
-			array(
-				'name'        => 'Pronamic_WP_Pay_Billing_Form',
-				'subsections' => array(
-					'html'    => new EE_Form_Section_HTML( $gateway->get_input_html() ),
-				),
-			)
-		);
+		if ( $gateway ) {
+			$form = new EE_Billing_Info_Form(
+				$this->_pm_instance,
+				array(
+					'name'        => 'Pronamic_WP_Pay_Billing_Form',
+					'subsections' => array(
+						'html'    => new EE_Form_Section_HTML( $gateway->get_input_html() ),
+					),
+				)
+			);
 
-		return $form;
+			return $form;
+		}
+
+		return null;
 	}
 
 	//////////////////////////////////////////////////
