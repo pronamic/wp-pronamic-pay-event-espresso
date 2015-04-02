@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1
+*	Updated WordPress pay core library to version 1.2.0.
+*	No longer parse HTML input fields but use the new get_output_fields() function.
+*	Added workaround for strange behaviour with 2 config select options.
+
 ## 1.1.0
 *	Added experimental support for Event Espresso 4.6 (or higher).
 

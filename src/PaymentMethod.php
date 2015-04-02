@@ -35,17 +35,21 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
 
-		$form = new EE_Billing_Info_Form(
-			$this->_pm_instance,
-			array(
-				'name'        => 'Pronamic_WP_Pay_Billing_Form',
-				'subsections' => array(
-					'html'    => new EE_Form_Section_HTML( $gateway->get_input_html() ),
-				),
-			)
-		);
+		if ( $gateway ) {
+			$form = new EE_Billing_Info_Form(
+				$this->_pm_instance,
+				array(
+					'name'        => 'Pronamic_WP_Pay_Billing_Form',
+					'subsections' => array(
+						'html'    => new EE_Form_Section_HTML( $gateway->get_input_html() ),
+					),
+				)
+			);
 
-		return $form;
+			return $form;
+		}
+
+		return null;
 	}
 
 	//////////////////////////////////////////////////
@@ -58,10 +62,20 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	public function generate_new_settings_form() {
 		EE_Registry::instance()->load_helper( 'Template' );
 
+		$config_options = Pronamic_WP_Pay_Plugin::get_config_select_options();
+
+		// Fix for incorrect normalization strategy
+		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113
+		$select_option = $config_options[0];
+
+		unset( $config_options[0] );
+
+		$config_options = array( 'select' => $select_option ) + $config_options;
+
 		$form = new EE_Payment_Method_Form( array(
 			'extra_meta_inputs' => array(
 				'config_id' => new EE_Select_Input(
-					Pronamic_WP_Pay_Plugin::get_config_select_options(),
+					$config_options,
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
 					)

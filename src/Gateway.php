@@ -36,44 +36,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 
 	//////////////////////////////////////////////////
 
-	private function get_fields_from_html( $html ) {
-		$fields = array();
-
-		$extracted_fields = explode( '<input ', $html );
-
-		foreach ( $extracted_fields as $field ) {
-			preg_match_all( '#([a-z]+=".*?")#i', $field, $inputs );
-
-			foreach ( $inputs[0] as $match ) {
-				list( $key, $value ) = explode( '="', $match );
-
-				// Remove start and end quotes
-				$value = substr( $value, 0, -1 );
-
-				switch ( strtolower( $key ) ) {
-					case 'name':
-						$name = $value;
-						break;
-
-					case 'value':
-						$input_value = $value;
-						break;
-				}
-			}
-
-			if ( isset( $name ) && isset( $input_value ) ) {
-				$fields[ $name ] = $input_value;
-
-				unset( $name );
-				unset( $input_value );
-			}
-		}
-
-		return $fields;
-	}
-
-	//////////////////////////////////////////////////
-
 	/**
 	 * Set redirection info
 	 *
@@ -99,21 +61,45 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 			$error = $pronamic_gateway->get_error();
 
 			if ( is_wp_error( $error ) ) {
-				foreach ( $error->get_error_messages() as $message ) {
-					// @todo Add message as notice to Event Espresso?
-					die( $message );
-				}
+				// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+				$error_message = sprintf(
+					__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
+					implode( ',', $error->get_error_messages() )
+				);
+
+				EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
+
+				throw new EE_Error( $error_message );
 			} else {
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_return', $return_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_success', $return_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
-				$args = $this->get_fields_from_html( $pronamic_gateway->get_output_html() );
+				$redirect_url  = $pronamic_payment->get_action_url();
+				$redirect_args = $pronamic_gateway->get_output_fields();
 
-				$ee_payment->set_redirect_url( $pronamic_payment->get_action_url() );
-				$ee_payment->set_redirect_args( $args );
+				/*
+				 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
+				 * we have to make sure an POST method is used when the redirect URL has query arguments.
+				 * Otheriwse the URL query arguments will be stripped by the users webbrowser. 
+				 * Herefor we have to make sure the redirect arguments array is not empty.
+				 *
+				 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547
+				 * @see http://stackoverflow.com/q/1116019
+				 */
+				if ( false !== strpos( $redirect_url, '?' ) && empty( $redirect_args ) ) {
+					$redirect_args[] = '';
+				}
+
+				$ee_payment->set_redirect_url( $redirect_url );
+				$ee_payment->set_redirect_args( $redirect_args );
 			}
+		} else {
+			$error = Pronamic_WP_Pay_Plugin::get_default_error_message();
+
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			throw new EE_Error( $error );
 		}
 
 		return $ee_payment;
