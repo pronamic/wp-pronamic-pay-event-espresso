@@ -35,7 +35,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	public function __construct( $gateway, EE_Line_Item $line_item, EE_Transaction $transaction ) {
 		parent::__construct();
 
-		$this->gateway     = $gateawy;
+		$this->gateway     = $gateway;
 		$this->line_item   = $line_item;
 		$this->transaction = $transaction;
 
