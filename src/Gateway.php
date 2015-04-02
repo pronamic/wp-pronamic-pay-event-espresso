@@ -61,10 +61,15 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 			$error = $pronamic_gateway->get_error();
 
 			if ( is_wp_error( $error ) ) {
-				foreach ( $error->get_error_messages() as $message ) {
-					// @todo Add message as notice to Event Espresso?
-					die( $message );
-				}
+				// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+				$error_message = sprintf(
+					__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
+					implode( ',', $error->get_error_messages() )
+				);
+
+				EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
+
+				throw new EE_Error( $error_message );
 			} else {
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_return', $return_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_success', $return_url );
@@ -90,6 +95,11 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				$ee_payment->set_redirect_url( $redirect_url );
 				$ee_payment->set_redirect_args( $redirect_args );
 			}
+		} else {
+			$error = Pronamic_WP_Pay_Plugin::get_default_error_message();
+
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			throw new EE_Error( $error );
 		}
 
 		return $ee_payment;
