@@ -82,7 +82,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				/*
 				 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
 				 * we have to make sure an POST method is used when the redirect URL has query arguments.
-				 * Otheriwse the URL query arguments will be stripped by the users webbrowser. 
+				 * Otheriwse the URL query arguments will be stripped by the users webbrowser.
 				 * Herefor we have to make sure the redirect arguments array is not empty.
 				 *
 				 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547

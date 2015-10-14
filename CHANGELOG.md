@@ -1,21 +1,39 @@
-# Changelog
+# Change Log
 
-## 1.1.1
-*	Updated WordPress pay core library to version 1.2.0.
-*	No longer parse HTML input fields but use the new get_output_fields() function.
-*	Added workaround for strange behaviour with 2 config select options.
+All notable changes to this project will be documented in this file.
 
-## 1.1.0
-*	Added experimental support for Event Espresso 4.6 (or higher).
+This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a CHANGELOG](http://keepachangelog.com/).
 
-## 1.0.3
-*	Changed WordPress pay core library requirment from ~1.0.0 to >=1.0.0.
+## [Unreleased][unreleased]
+-
 
-## 1.0.2
-*	Fixed fatal error on Event Espresso version 4.6 (or higher).
+## [1.1.2] - 2015-10-14
+- Fix sending multiple notifcations.
 
-## 1.0.1
-*	Fixed issue with getting customer name.
+## [1.1.1] - 2015-04-02
+- Updated WordPress pay core library to version 1.2.0.
+- No longer parse HTML input fields but use the new get_output_fields() function.
+- Added workaround for strange behaviour with 2 config select options.
 
-## 1.0.0
-*	First release.
+## [1.1.0] - 2015-03-25
+- Added experimental support for Event Espresso 4.6 (or higher).
+
+## [1.0.3] - 2015-03-03
+- Changed WordPress pay core library requirment from ~1.0.0 to >=1.0.0.
+
+## [1.0.2] - 2015-02-16
+- Fixed fatal error on Event Espresso version 4.6 (or higher).
+
+## [1.0.1] - 2015-01-27
+- Fixed issue with getting customer name.
+
+## 1.0.0 - 2015-01-20
+- First release.
+
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.2...HEAD
+[1.1.2]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/wp-pay-extensions/event-espresso/compare/1.0.3...1.1.0
+[1.0.3]: https://github.com/wp-pay-extensions/event-espresso/compare/1.0.2...1.0.3
+[1.0.2]: https://github.com/wp-pay-extensions/event-espresso/compare/1.0.1...1.0.2
+[1.0.1]: https://github.com/wp-pay-extensions/event-espresso/compare/1.0.0...1.0.1
