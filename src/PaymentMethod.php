@@ -79,7 +79,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
 					)
-				)
+				),
 			),
 		) );
 

@@ -21,7 +21,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 */
 	public static function instance( EEM_Gateways $model ) {
 		// check if class object is instantiated
-		if ( self::$_instance === null || ! is_object( self::$_instance ) || ! ( self::$_instance instanceof self ) ) {
+		if ( null === self::$_instance || ! is_object( self::$_instance ) || ! ( self::$_instance instanceof self ) ) {
 			self::$_instance = new self( $model );
 		}
 
@@ -105,7 +105,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 * @param string $selected_gateway
 	 */
 	public function espresso_display_payment_gateways( $selected_gateway = '' ) {
-		$this->_css_class = $selected_gateway == $this->_gateway_name ? '' : ' hidden';
+		$this->_css_class = ( $selected_gateway === $this->_gateway_name ) ? '' : ' hidden';
 
 		echo $this->_generate_payment_gateway_selection_button();
 
@@ -160,9 +160,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 			$error = $gateway->get_error();
 
-			if ( is_wp_error( $error ) ) {
-
-			} else {
+			if ( ! is_wp_error( $error ) ) {
 				$offsite_form = $this->submitPayment();
 
 				$offsite_form['form'] = $gateway->get_form_html( $payment, true );
