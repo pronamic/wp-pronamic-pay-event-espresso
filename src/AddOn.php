@@ -26,6 +26,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_AddOn extends EE_Addon {
 				'class_name'           => 'EE_Pronamic_WP_Pay_AddOn',
 				'payment_method_paths' => array(
 					dirname( __FILE__ ) . '/ee/payment-methods/Pronamic',
+					dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_IDeal',
 				),
 			)
 		);
