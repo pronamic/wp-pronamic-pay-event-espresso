@@ -35,6 +35,10 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
 
+		if ( $gateway->payment_method_is_required() ) {
+			$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+		}
+
 		if ( $gateway ) {
 			$form = new EE_Billing_Info_Form(
 				$this->_pm_instance,
