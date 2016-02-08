@@ -165,7 +165,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '>=' ) ) {
 			// Transaction
 			$transaction_processor = EE_Registry::instance()->load_class( 'Transaction_Processor' );
-			$ee_transaction = EEM_Transaction::instance()->get_one_by_ID( $payment->get_source_id() );
+			$ee_transaction        = EEM_Transaction::instance()->get_one_by_ID( $payment->get_source_id() );
+			$ee_payment            = $ee_transaction->last_payment();
 
 			if ( $transaction_processor->reg_step_completed( $ee_transaction, 'finalize_registration' ) ) {
 				// Set redirect URL to thank you page
@@ -173,19 +174,15 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 					'e_reg_url_link'    => $ee_transaction->primary_registration()->reg_url_link(),
 					'ee_payment_method' => 'pronamic',
 				) );
-			} else {
-				$ee_payment = $ee_transaction->last_payment();
+			}
 
-				// Payment status has changed, save.
-				if ( $ee_payment && $ee_payment->status() !== $status ) {
-					$ee_payment->set_status( $status );
-					$ee_payment->save();
-				}
+			// Payment status has changed, save.
+			if ( $ee_payment && $ee_payment->status() !== $status ) {
+				$ee_payment->set_status( $status );
+				$ee_payment->save();
 
-				if ( $can_redirect ) {
-					$payment_processor = EE_Registry::instance()->load_core( 'Payment_Processor' );
-					$payment_processor->finalize_payment_for( $ee_transaction, true );
-				}
+				$payment_processor = EE_Registry::instance()->load_core( 'Payment_Processor' );
+				$payment_processor->update_txn_based_on_payment( $ee_transaction, $ee_payment, true, true );
 			}
 		}
 
