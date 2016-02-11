@@ -7,6 +7,12 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.3] - 2016-02-11
+- Fix only first payment updates EE transaction.
+- Set default payment method to iDEAL if required.
+- Added iDEAL gateway and payment method.
+- Removed status code from redirect in status_update.
+
 ## [1.1.2] - 2015-10-14
 - Fix sending multiple notifcations.
 
@@ -30,7 +36,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.2...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.3...HEAD
+[1.1.3]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/wp-pay-extensions/event-espresso/compare/1.0.3...1.1.0

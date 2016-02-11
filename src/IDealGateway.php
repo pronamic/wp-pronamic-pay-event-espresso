@@ -3,10 +3,12 @@
 /**
  * Title: WordPress pay Event Espresso iDEAL gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2015
+ * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
+ *
  * @author Remco Tolsma
- * @version 1.0.1
+ * @version 1.1.3
+ * @since 1.0.1
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_Gateway {
 	/**
@@ -112,6 +114,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		$config_id = $this->_payment_settings['config_id'];
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+
+		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
 		?>
 		<div id="reg-page-billing-info-<?php echo $this->_gateway_name; ?>-dv" class="reg-page-billing-info-dv <?php echo $this->_css_class; ?>">

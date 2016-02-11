@@ -1,24 +1,24 @@
 <?php
 
 /**
- * Title: WordPress pay Event Espresso 4.6+ payment method
+ * Title: WordPress pay Event Espresso 4.6+ iDEAL payment method
  * Description:
  * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
  *
  * @author Remco Tolsma
  * @version 1.1.3
- * @since 1.1.0
+ * @since 1.1.3
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base {
+class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PMT_Base {
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
 	 * @param EE_Payment_Method $pm_instance
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_Gateway();
-		$this->_pretty_name        = __( 'Pronamic', 'pronamic_ideal' );
+		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway_46();
+		$this->_pretty_name        = __( 'iDEAL', 'pronamic_ideal' );
 		$this->_default_button_url = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
 
 		parent::__construct( $pm_instance );
@@ -36,9 +36,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
 
-		if ( $gateway->payment_method_is_required() ) {
-			$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
-		}
+		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
 		if ( $gateway ) {
 			$form = new EE_Billing_Info_Form(
@@ -103,6 +101,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
 	 */
 	public function system_name() {
-		return 'Pronamic';
+		return 'Pronamic_IDeal';
 	}
 }

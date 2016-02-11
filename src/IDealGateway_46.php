@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Title: WordPress pay Event Espresso 4.6+ gateway
+ * Title: WordPress pay Event Espresso 4.6+ iDEAL gateway
  * Description:
  * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.0
- * @since 1.1.0
+ * @version 1.1.3
+ * @since 1.1.3
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gateway {
+class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway_46 extends EE_Offsite_Gateway {
 	/**
 	 * Configuration ID
 	 *
@@ -57,7 +57,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 
 			$data = new Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData( $this, $total_line_item, $transaction );
 
-			$pronamic_payment = Pronamic_WP_Pay_Plugin::start( $this->_config_id, $pronamic_gateway, $data );
+			$pronamic_payment = Pronamic_WP_Pay_Plugin::start( $this->_config_id, $pronamic_gateway, $data, Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
 			$error = $pronamic_gateway->get_error();
 

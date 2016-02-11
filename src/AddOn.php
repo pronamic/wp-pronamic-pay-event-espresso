@@ -3,10 +3,11 @@
 /**
  * Title: WordPress pay Event Espresso addon
  * Description:
- * Copyright: Copyright (c) 2005 - 2015
+ * Copyright: Copyright (c) 2005 - 2016
  * Company: Pronamic
+ *
  * @author Remco Tolsma
- * @version 1.1.0
+ * @version 1.1.3
  * @since 1.1.0
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_AddOn extends EE_Addon {
@@ -26,6 +27,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_AddOn extends EE_Addon {
 				'class_name'           => 'EE_Pronamic_WP_Pay_AddOn',
 				'payment_method_paths' => array(
 					dirname( __FILE__ ) . '/ee/payment-methods/Pronamic',
+					dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_IDeal',
 				),
 			)
 		);
