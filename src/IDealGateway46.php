@@ -10,7 +10,7 @@
  * @version 1.1.3
  * @since 1.1.3
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway_46 extends EE_Offsite_Gateway {
+class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite_Gateway {
 	/**
 	 * Configuration ID
 	 *

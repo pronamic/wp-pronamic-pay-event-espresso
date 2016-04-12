@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [1.1.4] - 2016-04-12
+- No longer use camelCase for payment data.
+- Set global WordPress gateway config as default config in gateways.
+
 ## [1.1.3] - 2016-02-11
 - Fix only first payment updates EE transaction.
 - Set default payment method to iDEAL if required.
@@ -36,7 +40,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.3...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.4...HEAD
+[1.1.4]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.0...1.1.1

@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.3
+ * @version 1.1.4
  * @since 1.1.3
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PMT_Base {
@@ -17,7 +17,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	 * @param EE_Payment_Method $pm_instance
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway_46();
+		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46();
 		$this->_pretty_name        = __( 'iDEAL', 'pronamic_ideal' );
 		$this->_default_button_url = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
 
@@ -27,7 +27,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	//////////////////////////////////////////////////
 
 	/**
-	 * Creates the billing form for this payment method type
+	 * Creates the billing form for this payment method type.
+	 *
 	 * @param \EE_Transaction $transaction
 	 * @return NULL
 	 */
@@ -65,7 +66,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	public function generate_new_settings_form() {
 		EE_Registry::instance()->load_helper( 'Template' );
 
-		$config_options = Pronamic_WP_Pay_Plugin::get_config_select_options();
+		$config_options = Pronamic_WP_Pay_Plugin::get_config_select_options( Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
 		// Fix for incorrect normalization strategy
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113
@@ -81,6 +82,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 					$config_options,
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
+						'default'         => get_option( 'pronamic_pay_config_id' ),
 					)
 				),
 			),

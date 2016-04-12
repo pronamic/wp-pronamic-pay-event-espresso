@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.3
+ * @version 1.1.4
  * @since 1.1.0
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base {
@@ -27,7 +27,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	//////////////////////////////////////////////////
 
 	/**
-	 * Creates the billing form for this payment method type
+	 * Creates the billing form for this payment method type.
+	 *
 	 * @param \EE_Transaction $transaction
 	 * @return NULL
 	 */
@@ -83,6 +84,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 					$config_options,
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
+						'default'         => get_option( 'pronamic_pay_config_id' ),
 					)
 				),
 			),
