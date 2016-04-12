@@ -209,7 +209,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$pronamic_url = $this->_get_return_url( $registration );
 
-		// Return
+		// Return update
 		return $this->update_transaction_with_payment( $transaction, $payment );
 	}
 }

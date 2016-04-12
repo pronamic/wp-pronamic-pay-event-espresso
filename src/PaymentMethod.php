@@ -27,7 +27,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	//////////////////////////////////////////////////
 
 	/**
-	 * Creates the billing form for this payment method type
+	 * Creates the billing form for this payment method type.
+	 *
 	 * @param \EE_Transaction $transaction
 	 * @return NULL
 	 */

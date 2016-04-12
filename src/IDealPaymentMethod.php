@@ -17,7 +17,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	 * @param EE_Payment_Method $pm_instance
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway_46();
+		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46();
 		$this->_pretty_name        = __( 'iDEAL', 'pronamic_ideal' );
 		$this->_default_button_url = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
 
@@ -27,7 +27,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	//////////////////////////////////////////////////
 
 	/**
-	 * Creates the billing form for this payment method type
+	 * Creates the billing form for this payment method type.
+	 *
 	 * @param \EE_Transaction $transaction
 	 * @return NULL
 	 */
