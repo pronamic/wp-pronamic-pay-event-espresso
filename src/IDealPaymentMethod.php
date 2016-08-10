@@ -85,6 +85,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 						'default'         => get_option( 'pronamic_pay_config_id' ),
 					)
 				),
+				'transaction_description' => new EE_Text_Input(
+					array(
+						'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
+						'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
+					)
+				),
 			),
 		) );
 

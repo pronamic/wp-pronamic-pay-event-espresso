@@ -24,6 +24,11 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 	 */
 	protected $_config_id;
 
+	/**
+	 * Transaction description
+	 */
+	protected $_transaction_description;
+
 	//////////////////////////////////////////////////
 
 	/**
@@ -33,6 +38,15 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 	 */
 	public function get_config_id() {
 		return $this->_config_id;
+	}
+
+	/**
+	 * Get the gateway transaction description
+	 *
+	 * @return string
+	 */
+	public function get_transaction_description() {
+		return $this->_transaction_description;
 	}
 
 	//////////////////////////////////////////////////
