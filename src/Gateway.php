@@ -91,7 +91,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
-				$redirect_url  = $pronamic_payment->get_action_url();
+				$redirect_url  = $pronamic_payment->get_pay_redirect_url();
 				$redirect_args = $pronamic_gateway->get_output_fields();
 
 				/*
