@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.3
+ * @version 1.1.5
  * @since 1.1.3
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite_Gateway {
@@ -25,7 +25,9 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 	protected $_config_id;
 
 	/**
-	 * Transaction description
+	 * Transaction description.
+	 *
+	 * @since 1.1.5
 	 */
 	protected $_transaction_description;
 
