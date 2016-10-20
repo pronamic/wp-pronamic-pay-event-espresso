@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.0
+ * @version 1.1.5
  * @since 1.1.0
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gateway {
@@ -24,6 +24,13 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 	 */
 	protected $_config_id;
 
+	/**
+	 * Transaction description.
+	 *
+	 * @since 1.1.5
+	 */
+	protected $_transaction_description;
+
 	//////////////////////////////////////////////////
 
 	/**
@@ -33,6 +40,16 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 	 */
 	public function get_config_id() {
 		return $this->_config_id;
+	}
+
+	/**
+	 * Get the gateway transaction description
+	 *
+	 * @since 1.1.5
+	 * @return string
+	 */
+	public function get_transaction_description() {
+		return $this->_transaction_description;
 	}
 
 	//////////////////////////////////////////////////
@@ -77,7 +94,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Gateway extends EE_Offsite_Gatewa
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 				update_post_meta( $pronamic_payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
-				$redirect_url  = $pronamic_payment->get_action_url();
+				$redirect_url  = $pronamic_payment->get_pay_redirect_url();
 				$redirect_args = $pronamic_gateway->get_output_fields();
 
 				/*

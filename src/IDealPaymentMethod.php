@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.4
+ * @version 1.1.5
  * @since 1.1.3
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PMT_Base {
@@ -37,9 +37,9 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 
 		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
 
-		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
-
 		if ( $gateway ) {
+			$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+
 			$form = new EE_Billing_Info_Form(
 				$this->_pm_instance,
 				array(
@@ -83,6 +83,13 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
 						'default'         => get_option( 'pronamic_pay_config_id' ),
+					)
+				),
+				'transaction_description' => new EE_Text_Input(
+					array(
+						'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
+						'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
+						'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
 					)
 				),
 			),

@@ -7,7 +7,7 @@
  * Company: Pronamic
  *
  * @author Remco Tolsma
- * @version 1.1.4
+ * @version 1.1.5
  * @since 1.0.0
  */
 class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_Pay_PaymentData {
@@ -74,7 +74,25 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	 * @return string
 	 */
 	public function get_description() {
-		return $this->get_title();
+		$search = array(
+			'{transaction_id}',
+		);
+
+		$replace = array(
+			$this->get_order_id(),
+		);
+
+		$description = '';
+
+		if ( method_exists( $this->gateway, 'get_transaction_description' ) ) {
+			$description = $this->gateway->get_transaction_description();
+		}
+
+		if ( '' === $description ) {
+			$description = $this->get_title();
+		}
+
+		return str_replace( $search, $replace, $description );
 	}
 
 	/**
