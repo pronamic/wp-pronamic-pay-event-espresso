@@ -54,7 +54,9 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 			}
 
 			// Actions
-			add_filter( 'pronamic_payment_source_text_eventespresso',   array( $this, 'source_text' ), 10, 2 );
+			add_filter( 'pronamic_payment_source_text_eventespresso', array( $this, 'source_text' ), 10, 2 );
+			add_filter( 'pronamic_payment_source_description_eventespresso', array( $this, 'source_description' ), 10, 2 );
+			add_filter( 'pronamic_payment_source_url_eventespresso', array( $this, 'source_url' ), 10, 2 );
 
 			add_action( 'pronamic_payment_status_update_eventespresso', array( $this, 'status_update' ), 10, 2 );
 			add_action( 'pronamic_payment_status_update_eventespresso_unknown_to_success', array( $this, 'update_status_unknown_to_success' ), 10, 2 );
@@ -259,5 +261,27 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		);
 
 		return $text;
+	}
+
+	/**
+	 * Source description.
+	 */
+	public function source_description( $description, Pronamic_Pay_Payment $payment ) {
+		$description = __( 'Event Espresso Transaction', 'pronamic_ideal' );
+
+		return $description;
+	}
+
+	/**
+	 * Source URL.
+	 */
+	public function source_url( $url, Pronamic_Pay_Payment $payment ) {
+		$url = add_query_arg( array(
+			'page'   => 'espresso_transactions',
+			'action' => 'view_transaction',
+			'TXN_ID' => $payment->get_source_id(),
+		), admin_url( 'admin.php' ) );
+
+		return $url;
 	}
 }
