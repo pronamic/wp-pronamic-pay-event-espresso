@@ -18,6 +18,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_AddOn extends EE_Addon {
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
 	 */
 	public static function register_addon() {
+		class_alias( 'Pronamic_WP_Pay_Extensions_EventEspresso_AddOn', 'EE_Pronamic_WP_Pay_AddOn' );
+
 		EE_Register_Addon::register(
 			'pronamic_pay',
 			array(
