@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ iDEAL gateway
@@ -64,7 +65,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 	 * @param type $cancel_url
 	 */
 	public function set_redirection_info( $ee_payment, $billing_info = array(), $return_url = null, $notify_url = null, $cancel_url = null ) {
-		$pronamic_gateway = Pronamic_WP_Pay_Plugin::get_gateway( $this->_config_id );
+		$pronamic_gateway = Plugin::get_gateway( $this->_config_id );
 
 		if ( $pronamic_gateway ) {
 			$transaction = $ee_payment->transaction();
@@ -73,7 +74,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 
 			$data = new Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData( $this, $total_line_item, $transaction );
 
-			$pronamic_payment = Pronamic_WP_Pay_Plugin::start( $this->_config_id, $pronamic_gateway, $data, Pronamic_WP_Pay_PaymentMethods::IDEAL );
+			$pronamic_payment = Plugin::start( $this->_config_id, $pronamic_gateway, $data, Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
 			$error = $pronamic_gateway->get_error();
 
@@ -113,7 +114,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 				$ee_payment->set_redirect_args( $redirect_args );
 			}
 		} else {
-			$error = Pronamic_WP_Pay_Plugin::get_default_error_message();
+			$error = Plugin::get_default_error_message();
 
 			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
 			throw new EE_Error( $error );

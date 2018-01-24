@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Plugin;
 
 /**
  * Title: WordPress pay Event Espresso iDEAL gateway
@@ -40,7 +41,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	public function __construct( EEM_Gateways $model ) {
 		$this->_gateway_name = 'pronamic_pay_ideal';
 		$this->_path         = str_replace( '\\', '/', __FILE__ );
-		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Plugin::$file );
 
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Offsite_Gateway.class.php#L4
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L26
@@ -59,7 +60,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 */
 	protected function _default_settings() {
 		$this->_payment_settings['display_name'] = __( 'iDEAL', 'pronamic_ideal' );
-		$this->_payment_settings['button_url']   = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_payment_settings['button_url']   = plugins_url( 'images/ideal/ee-4-icon.png', Plugin::$file );
 		$this->_payment_settings['current_path'] = '';
 	}
 
@@ -113,7 +114,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$config_id = $this->_payment_settings['config_id'];
 
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+		$gateway = Plugin::get_gateway( $config_id );
 
 		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
 
@@ -155,12 +156,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$config_id = $this->_payment_settings['config_id'];
 
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+		$gateway = Plugin::get_gateway( $config_id );
 
 		if ( $gateway ) {
 			$data = new Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData( $this, $total_line_item, $transaction );
 
-			$payment = Pronamic_WP_Pay_Plugin::start( $config_id, $gateway, $data );
+			$payment = Plugin::start( $config_id, $gateway, $data );
 
 			$error = $gateway->get_error();
 

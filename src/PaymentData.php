@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Payments\PaymentData;
 
 /**
  * Title: WordPress pay Event Espresso payment data
@@ -10,7 +11,7 @@
  * @version 1.1.5
  * @since 1.0.0
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_Pay_PaymentData {
+class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends PaymentData {
 	/**
 	 * Line item
 	 *
