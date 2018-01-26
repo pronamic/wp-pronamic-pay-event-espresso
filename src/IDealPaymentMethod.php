@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -39,7 +40,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 		$gateway = Plugin::get_gateway( $config_id );
 
 		if ( $gateway ) {
-			$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+			$gateway->set_payment_method( PaymentMethods::IDEAL );
 
 			$form = new EE_Billing_Info_Form(
 				$this->_pm_instance,
@@ -67,7 +68,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 	public function generate_new_settings_form() {
 		EE_Registry::instance()->load_helper( 'Template' );
 
-		$config_options = Plugin::get_config_select_options( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+		$config_options = Plugin::get_config_select_options( PaymentMethods::IDEAL );
 
 		// Fix for incorrect normalization strategy
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113

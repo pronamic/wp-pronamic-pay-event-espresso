@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -74,7 +75,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway46 extends EE_Offsite
 
 			$data = new Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData( $this, $total_line_item, $transaction );
 
-			$pronamic_payment = Plugin::start( $this->_config_id, $pronamic_gateway, $data, Pronamic_WP_Pay_PaymentMethods::IDEAL );
+			$pronamic_payment = Plugin::start( $this->_config_id, $pronamic_gateway, $data, PaymentMethods::IDEAL );
 
 			$error = $pronamic_gateway->get_error();
 

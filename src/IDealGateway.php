@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
@@ -116,7 +117,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$gateway = Plugin::get_gateway( $config_id );
 
-		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+		$gateway->set_payment_method( PaymentMethods::IDEAL );
 
 		?>
 		<div id="reg-page-billing-info-<?php echo $this->_gateway_name; ?>-dv" class="reg-page-billing-info-dv <?php echo $this->_css_class; ?>">

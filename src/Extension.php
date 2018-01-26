@@ -1,4 +1,5 @@
 <?php
+use Pronamic\WordPress\Pay\Core\Statuses;
 
 /**
  * Title: WordPress pay Event Espresso extension
@@ -143,22 +144,22 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 
 		// Status
 		switch ( $payment->get_status() ) {
-			case Pronamic_WP_Pay_Statuses::CANCELLED :
+			case Statuses::CANCELLED :
 				$url    = $url_cancel;
 				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::CANCELLED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::EXPIRED :
+			case Statuses::EXPIRED :
 				$url    = $url_error;
 				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::FAILURE :
+			case Statuses::FAILURE :
 				$url    = $url_error;
 				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::SUCCESS :
+			case Statuses::SUCCESS :
 				$url    = $url_success;
 				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::APPROVED;
 
