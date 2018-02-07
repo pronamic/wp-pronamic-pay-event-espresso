@@ -236,7 +236,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 
 				exit;
 			}
-	    }
+		}
 	}
 
 	//////////////////////////////////////////////////
@@ -251,9 +251,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 			'TXN_ID' => $payment->get_source_id(),
 		), admin_url( 'admin.php' ) );
 
-		$text  = '';
-
-		$text .= __( 'Event Espresso', 'pronamic_ideal' ) . '<br />';
+		$text = __( 'Event Espresso', 'pronamic_ideal' ) . '<br />';
 
 		$text .= sprintf(
 			'<a href="%s">%s</a>',

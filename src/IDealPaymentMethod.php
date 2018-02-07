@@ -47,7 +47,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 				array(
 					'name'        => 'Pronamic_WP_Pay_Billing_Form',
 					'subsections' => array(
-						'html'    => new EE_Form_Section_HTML( $gateway->get_input_html() ),
+						'html' => new EE_Form_Section_HTML( $gateway->get_input_html() ),
 					),
 				)
 			);
@@ -80,7 +80,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod extends EE_PM
 
 		$form = new EE_Payment_Method_Form( array(
 			'extra_meta_inputs' => array(
-				'config_id' => new EE_Select_Input(
+				'config_id'               => new EE_Select_Input(
 					$config_options,
 					array(
 						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),

@@ -120,12 +120,14 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		$gateway->set_payment_method( PaymentMethods::IDEAL );
 
 		?>
-		<div id="reg-page-billing-info-<?php echo $this->_gateway_name; ?>-dv" class="reg-page-billing-info-dv <?php echo $this->_css_class; ?>">
-			<h3><?php _e( 'You have selected "iDEAL" as your method of payment', 'pronamic_ideal' ); ?></h3>
-			<p><?php _e( 'After finalizing your registration, you will be transferred to iDEAL where your payment will be securely processed.', 'pronamic_ideal' ); ?></p>
+		<div id="reg-page-billing-info-<?php echo esc_attr( $this->_gateway_name ); ?>-dv" class="reg-page-billing-info-dv <?php echo esc_attr( $this->_css_class ); ?>">
+			<h3><?php esc_html_e( 'You have selected "iDEAL" as your method of payment', 'pronamic_ideal' ); ?></h3>
+			<p><?php esc_html_e( 'After finalizing your registration, you will be transferred to iDEAL where your payment will be securely processed.', 'pronamic_ideal' ); ?></p>
 
 			<?php
-			echo $gateway->get_input_html();
+
+			echo $gateway->get_input_html(); // WPCS: xss ok.
+
 			?>
 		</div>
 		<?php
@@ -185,12 +187,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		global $pronamic_payment, $pronamic_url;
 
 		// Transaction ID
-	    $transaction_id = $transaction->ID();
+		$transaction_id = $transaction->ID();
 
-	    // Payment
-	    $payment = $this->_PAY->get_payment_by_txn_id_chq_nmbr( $transaction_id );
+		// Payment
+		$payment = $this->_PAY->get_payment_by_txn_id_chq_nmbr( $transaction_id );
 
-	    if ( empty( $payment ) ) {
+		if ( empty( $payment ) ) {
 			$payment = EE_Payment::new_instance( array(
 				'TXN_ID'              => $transaction_id,
 				'STS_ID'              => EEM_Payment::status_id_approved,
@@ -199,11 +201,11 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 				'PAY_gateway'         => __( 'iDEAL', 'pronamic_ideal' ),
 				'PAY_txn_id_chq_nmbr' => $transaction_id,
 			) );
-	    } else {
+		} else {
 			$payment->set_status( EEM_Payment::status_id_approved );
-	    }
+		}
 
-	    // Save
+		// Save
 		$payment->save();
 
 		// URL
