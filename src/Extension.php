@@ -263,7 +263,41 @@ class Extension {
 
 			exit;
 		}
+	}
+
+	/////////////////////////////////////////////////
+
+	/**
+	 * Payment redirect URL filter.
+	 *
+	 * @param string  $url
+	 * @param Payment $payment
+	 *
+	 * @return string
+	 */
+	public static function redirect_url( $url, Payment $payment ) {
+		$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_return', true );
+
+		switch ( $payment->get_status() ) {
+			case Statuses::CANCELLED:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', true );
+
+				break;
+			case Statuses::FAILURE:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_error', true );
+
+				break;
+			case Statuses::SUCCESS:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_success', true );
+
+				break;
 		}
+
+		if ( ! empty( $redirect_url ) ) {
+			return $redirect_url;
+		}
+
+		return $url;
 	}
 
 	//////////////////////////////////////////////////
