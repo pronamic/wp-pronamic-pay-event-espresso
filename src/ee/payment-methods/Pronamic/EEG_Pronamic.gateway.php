@@ -1,3 +1,3 @@
 <?php
 
-class_alias( 'Pronamic_WP_Pay_Extensions_EventEspresso_Gateway', 'EEG_Pronamic' );
+class_alias( 'Pronamic\WordPress\Pay\Extensions\EventEspresso\Gateway', 'EEG_Pronamic' );

@@ -1,3 +1,3 @@
 <?php
 
-class_alias( 'Pronamic_WP_Pay_Extensions_EventEspresso_IDeal_PaymentMethod', 'EE_PMT_Pronamic_IDeal' );
+class_alias( 'Pronamic\WordPress\Pay\Extensions\EventEspresso\IDealPaymentMethod', 'EE_PMT_Pronamic_IDeal' );

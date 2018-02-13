@@ -1,4 +1,16 @@
 <?php
+
+namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
+
+use EE_Billing_Info_Form;
+use EE_Form_Section_HTML;
+use EE_Payment_Method;
+use EE_Payment_Method_Form;
+use EE_PMT_Base;
+use EE_Registry;
+use EE_Select_Input;
+use EE_Text_Input;
+use EE_Transaction;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
@@ -8,20 +20,31 @@ use Pronamic\WordPress\Pay\Plugin;
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
+ * @author  Remco Tolsma
  * @version 1.1.5
- * @since 1.1.0
+ * @since   1.1.0
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base {
+class PaymentMethod extends EE_PMT_Base {
+	/**
+	 * Payment method.
+	 *
+	 * @since unreleased
+	 *
+	 * @var string $payment_method
+	 */
+	protected $payment_method = null;
+
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
 	 * @param EE_Payment_Method $pm_instance
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new Pronamic_WP_Pay_Extensions_EventEspresso_Gateway();
-		$this->_pretty_name        = __( 'Pronamic', 'pronamic_ideal' );
-		$this->_default_button_url = plugins_url( 'images/ideal/ee-4-icon.png', Plugin::$file );
+		if ( null === $this->payment_method ) {
+			$this->_gateway            = new Gateway();
+			$this->_pretty_name        = __( 'Pronamic', 'pronamic_ideal' );
+			$this->_default_button_url = plugins_url( 'images/pronamic/ee-4-icon.png', Plugin::$file );
+		}
 
 		parent::__construct( $pm_instance );
 	}
@@ -32,6 +55,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	 * Creates the billing form for this payment method type.
 	 *
 	 * @param \EE_Transaction $transaction
+	 *
 	 * @return NULL
 	 */
 	public function generate_new_billing_form( EE_Transaction $transaction = null ) {
@@ -40,7 +64,9 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 		$gateway = Plugin::get_gateway( $config_id );
 
 		if ( $gateway ) {
-			if ( $gateway->payment_method_is_required() ) {
+			$gateway->set_payment_method( $this->payment_method );
+
+			if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
 				$gateway->set_payment_method( PaymentMethods::IDEAL );
 			}
 
@@ -70,7 +96,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentMethod extends EE_PMT_Base
 	public function generate_new_settings_form() {
 		EE_Registry::instance()->load_helper( 'Template' );
 
-		$config_options = Plugin::get_config_select_options();
+		$config_options = Plugin::get_config_select_options( $this->payment_method );
 
 		// Fix for incorrect normalization strategy
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113
