@@ -35,7 +35,7 @@ class AlipayPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new AlipayGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::ALIPAY );
-		$this->_default_button_url = plugins_url( 'images/alipay/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/alipay/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}

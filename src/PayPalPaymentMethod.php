@@ -35,7 +35,7 @@ class PayPalPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new PayPalGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::PAYPAL );
-		$this->_default_button_url = plugins_url( 'images/paypal/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/paypal/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}

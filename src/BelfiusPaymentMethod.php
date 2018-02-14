@@ -35,7 +35,7 @@ class BelfiusPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new BelfiusGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::BELFIUS );
-		$this->_default_button_url = plugins_url( 'images/belfius/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/belfius/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}

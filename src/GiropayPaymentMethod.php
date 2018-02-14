@@ -35,7 +35,7 @@ class GiropayPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new GiropayGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::GIROPAY );
-		$this->_default_button_url = plugins_url( 'images/giropay/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/giropay/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}

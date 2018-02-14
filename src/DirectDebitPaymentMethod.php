@@ -35,7 +35,7 @@ class DirectDebitPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new DirectDebitGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::DIRECT_DEBIT );
-		$this->_default_button_url = plugins_url( 'images/direct-debit/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/direct-debit/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}

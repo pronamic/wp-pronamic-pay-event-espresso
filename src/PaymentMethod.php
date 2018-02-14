@@ -43,7 +43,7 @@ class PaymentMethod extends EE_PMT_Base {
 		if ( null === $this->payment_method ) {
 			$this->_gateway            = new Gateway();
 			$this->_pretty_name        = __( 'Pronamic', 'pronamic_ideal' );
-			$this->_default_button_url = plugins_url( 'images/pronamic/ee-4-icon.png', Plugin::$file );
+			$this->_default_button_url = plugins_url( 'images/pronamic/icon-64x48.png', Plugin::$file );
 		}
 
 		parent::__construct( $pm_instance );

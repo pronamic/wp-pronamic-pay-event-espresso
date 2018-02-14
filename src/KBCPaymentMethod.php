@@ -35,7 +35,7 @@ class KBCPaymentMethod extends PaymentMethod {
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new KBCGateway();
 		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::KBC );
-		$this->_default_button_url = plugins_url( 'images/kbc/ee-4-icon.png', Plugin::$file );
+		$this->_default_button_url = plugins_url( 'images/kbc/icon-64x48.png', Plugin::$file );
 
 		parent::__construct( $pm_instance );
 	}
