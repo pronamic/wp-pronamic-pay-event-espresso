@@ -14,7 +14,7 @@ use PHPUnit_Framework_TestCase;
  * @version unreleased
  * @since   unreleased
  */
-class AppThemesTest extends PHPUnit_Framework_TestCase {
+class AddOnTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test class.
 	 */
