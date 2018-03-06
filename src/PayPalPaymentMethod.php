@@ -25,8 +25,6 @@ class PayPalPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::PAYPAL;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class PayPalPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

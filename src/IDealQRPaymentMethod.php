@@ -25,8 +25,6 @@ class IDealQRPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::IDEALQR;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class IDealQRPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

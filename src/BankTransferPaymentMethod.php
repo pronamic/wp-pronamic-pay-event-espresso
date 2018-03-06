@@ -25,8 +25,6 @@ class BankTransferPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::BANK_TRANSFER;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class BankTransferPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

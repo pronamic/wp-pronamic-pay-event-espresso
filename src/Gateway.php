@@ -47,8 +47,6 @@ class Gateway extends EE_Offsite_Gateway {
 	 */
 	protected $_transaction_description;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get the gateay configuration ID
 	 *
@@ -67,8 +65,6 @@ class Gateway extends EE_Offsite_Gateway {
 	public function get_transaction_description() {
 		return $this->_transaction_description;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Set redirection info
@@ -106,6 +102,7 @@ class Gateway extends EE_Offsite_Gateway {
 		if ( is_wp_error( $error ) ) {
 			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
 			$error_message = sprintf(
+				/* translators: %s: error message */
 				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
 				implode( ',', $error->get_error_messages() )
 			);
@@ -141,8 +138,6 @@ class Gateway extends EE_Offsite_Gateway {
 
 		return $ee_payment;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Handle payment update

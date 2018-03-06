@@ -49,8 +49,6 @@ class PaymentMethod extends EE_PMT_Base {
 		parent::__construct( $pm_instance );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Creates the billing form for this payment method type.
 	 *
@@ -86,8 +84,6 @@ class PaymentMethod extends EE_PMT_Base {
 		return null;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Gets the form for all the settings related to this payment method type
 	 *
@@ -118,6 +114,7 @@ class PaymentMethod extends EE_PMT_Base {
 				'transaction_description' => new EE_Text_Input(
 					array(
 						'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
+						/* translators: %s: <code>{transaction_id}</code> */
 						'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
 						'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
 					)
@@ -127,8 +124,6 @@ class PaymentMethod extends EE_PMT_Base {
 
 		return $form;
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

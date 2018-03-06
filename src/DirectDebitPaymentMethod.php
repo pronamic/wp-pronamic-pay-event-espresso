@@ -25,8 +25,6 @@ class DirectDebitPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::DIRECT_DEBIT;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class DirectDebitPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

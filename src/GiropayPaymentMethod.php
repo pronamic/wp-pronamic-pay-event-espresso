@@ -25,8 +25,6 @@ class GiropayPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::GIROPAY;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class GiropayPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

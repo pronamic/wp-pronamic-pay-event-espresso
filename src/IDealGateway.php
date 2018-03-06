@@ -25,16 +25,20 @@ use Pronamic\WordPress\Pay\Plugin;
 class IDealGateway extends EE_Offsite_Gateway {
 	/**
 	 * Instance
+	 *
+	 * @var _instance Gateway instance.
 	 */
 	private static $_instance = null;
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Instance
+	 * Instance.
+	 *
+	 * @param EEM_Gateways $model Gateway model.
+	 *
+	 * @return IDealGateway
 	 */
 	public static function instance( EEM_Gateways $model ) {
-		// check if class object is instantiated
+		// Check if class object is instantiated.
 		if ( null === self::$_instance || ! is_object( self::$_instance ) || ! ( self::$_instance instanceof self ) ) {
 			self::$_instance = new self( $model );
 		}
@@ -42,12 +46,10 @@ class IDealGateway extends EE_Offsite_Gateway {
 		return self::$_instance;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Constructs and initialize iDEAL gateway
+	 * Constructs and initialize iDEAL gateway.
 	 *
-	 * @param EEM_Gateways $model
+	 * @param EEM_Gateways $model Gateway model.
 	 */
 	public function __construct( EEM_Gateways $model ) {
 		$this->_gateway_name = 'pronamic_pay_ideal';
@@ -58,10 +60,6 @@ class IDealGateway extends EE_Offsite_Gateway {
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L26
 		parent::__construct( $model );
 	}
-
-	//////////////////////////////////////////////////
-	// Abstract functions
-	//////////////////////////////////////////////////
 
 	/**
 	 * Default settings
@@ -116,7 +114,7 @@ class IDealGateway extends EE_Offsite_Gateway {
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L86
 	 *
-	 * @param string $selected_gateway
+	 * @param string $selected_gateway Selected gateway.
 	 */
 	public function espresso_display_payment_gateways( $selected_gateway = '' ) {
 		$this->_css_class = ( $selected_gateway === $this->_gateway_name ) ? '' : ' hidden';
@@ -143,24 +141,19 @@ class IDealGateway extends EE_Offsite_Gateway {
 		<?php
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Display settings help
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/modules/gateways/Paypal_Standard/EE_Paypal_Standard.class.php#L302-L345
 	 */
 	protected function _display_settings_help() {
-
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Process payment start
+	 * Process payment start.
 	 *
-	 * @param EE_Line_Item $total_line_item
-	 * @param              $transaction
+	 * @param EE_Line_Item   $total_line_item Total line item.
+	 * @param EE_Transaction $transaction     Transaction.
 	 */
 	public function process_payment_start( EE_Line_Item $total_line_item, $transaction = null ) {
 		if ( ! $transaction ) {

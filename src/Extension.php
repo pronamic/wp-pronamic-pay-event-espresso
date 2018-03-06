@@ -27,16 +27,12 @@ class Extension {
 	 */
 	const SLUG = 'eventespresso';
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Bootstrap
 	 */
 	public static function bootstrap() {
 		new self();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initalize an Event Espresso extension
@@ -45,8 +41,6 @@ class Extension {
 		// Actions
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Is active
@@ -57,8 +51,6 @@ class Extension {
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
 		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Plugins loaded
@@ -83,8 +75,6 @@ class Extension {
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10, 2 );
 		add_action( 'pronamic_payment_status_update__' . self::SLUG . '_unknown_to_success', array( $this, 'update_status_unknown_to_success' ), 10, 2 );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Initialize Event Espresso 4.6+
@@ -111,8 +101,6 @@ class Extension {
 		 */
 		AddOn::register_addon();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Initialize Event Espresso > 4.0 < 4.6
@@ -148,8 +136,6 @@ class Extension {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Update lead status of the specified payment
 	 *
@@ -168,22 +154,22 @@ class Extension {
 
 		// Status
 		switch ( $payment->get_status() ) {
-			case Statuses::CANCELLED :
+			case Statuses::CANCELLED:
 				$url    = $url_cancel;
 				$status = PaymentStatuses::CANCELLED;
 
 				break;
-			case Statuses::EXPIRED :
+			case Statuses::EXPIRED:
 				$url    = $url_error;
 				$status = PaymentStatuses::FAILED;
 
 				break;
-			case Statuses::FAILURE :
+			case Statuses::FAILURE:
 				$url    = $url_error;
 				$status = PaymentStatuses::FAILED;
 
 				break;
-			case Statuses::SUCCESS :
+			case Statuses::SUCCESS:
 				$url    = $url_success;
 				$status = PaymentStatuses::APPROVED;
 
@@ -197,7 +183,7 @@ class Extension {
 			$ee_payment            = $ee_transaction->last_payment();
 
 			if ( $transaction_processor->reg_step_completed( $ee_transaction, 'finalize_registration' ) ) {
-				// Set redirect URL to thank you page
+				// Set redirect URL to thank you page.
 				$url = EE_Config::instance()->core->thank_you_page_url( array(
 					'e_reg_url_link'    => $ee_transaction->primary_registration()->reg_url_link(),
 					'ee_payment_method' => 'pronamic',
@@ -214,15 +200,13 @@ class Extension {
 			}
 		}
 
-		// Redirect
+		// Redirect.
 		if ( $can_redirect ) {
 			wp_redirect( $url );
 
 			exit;
 		}
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Update lead status of the specified payment
@@ -231,7 +215,7 @@ class Extension {
 	 * @param bool    $can_redirect
 	 */
 	public function update_status_unknown_to_success( Payment $payment, $can_redirect = false ) {
-		// Check for Eevent Espresso version 4.0 to 4.6
+		// Check for Eevent Espresso version 4.0 to 4.6.
 		if ( ! ( version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' ) && version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) ) {
 			return;
 		}
@@ -257,15 +241,13 @@ class Extension {
 
 		unset( $pronamic_payment );
 
-		// Redirect URL
+		// Redirect.
 		if ( $can_redirect ) {
 			wp_redirect( $pronamic_url, 303 );
 
 			exit;
 		}
 	}
-
-	/////////////////////////////////////////////////
 
 	/**
 	 * Payment redirect URL filter.
@@ -300,8 +282,6 @@ class Extension {
 		return $url;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Source column
 	 *
@@ -322,6 +302,7 @@ class Extension {
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
 			esc_attr( $url ),
+			/* translators: %s: payment source id */
 			sprintf( __( 'Transaction %s', 'pronamic_ideal' ), $payment->get_source_id() )
 		);
 

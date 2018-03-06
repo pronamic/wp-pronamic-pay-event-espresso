@@ -25,8 +25,6 @@ class PayconiqPaymentMethod extends PaymentMethod {
 	 */
 	protected $payment_method = PaymentMethods::PAYCONIQ;
 
-	/////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
@@ -39,8 +37,6 @@ class PayconiqPaymentMethod extends PaymentMethod {
 
 		parent::__construct( $pm_instance );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * System name

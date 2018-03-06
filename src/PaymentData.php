@@ -35,8 +35,6 @@ class PaymentData extends Pay_PaymentData {
 	 */
 	private $transaction;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an WooCommerce iDEAL data proxy
 	 *
@@ -55,8 +53,6 @@ class PaymentData extends Pay_PaymentData {
 		$this->primary_attendee   = $this->primary_registrant->attendee();
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get source indicator
 	 *
@@ -71,9 +67,8 @@ class PaymentData extends Pay_PaymentData {
 		return $this->transaction->ID();
 	}
 
-	//////////////////////////////////////////////////
-
 	public function get_title() {
+		/* translators: %s: order id */
 		return sprintf( __( 'Event Espresso transaction %s', 'pronamic_ideal' ), $this->get_order_id() );
 	}
 
@@ -138,10 +133,6 @@ class PaymentData extends Pay_PaymentData {
 		return $items;
 	}
 
-	//////////////////////////////////////////////////
-	// Currency
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get currency
 	 *
@@ -151,10 +142,6 @@ class PaymentData extends Pay_PaymentData {
 	public function get_currency_alphabetic_code() {
 		return 'EUR';
 	}
-
-	//////////////////////////////////////////////////
-	// Customer
-	//////////////////////////////////////////////////
 
 	public function get_email() {
 		return $this->primary_attendee->email();
@@ -175,10 +162,6 @@ class PaymentData extends Pay_PaymentData {
 	public function get_zip() {
 		return null;
 	}
-
-	//////////////////////////////////////////////////
-	// URL's
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get normal return URL
