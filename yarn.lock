@@ -437,7 +437,7 @@ grunt@~0.4.1:
     underscore.string "~2.2.1"
     which "~1.0.5"
 
-grunt@~1.0.1:
+grunt@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/grunt/-/grunt-1.0.2.tgz#4e6a5e695b70472fd5304f5fa9e34236836a73bc"
   dependencies:
