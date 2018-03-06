@@ -21,7 +21,7 @@ module.exports = function( grunt ) {
 				],
 			},
 			options: {
-                bin: 'vendor/bin/phpcs',
+				bin: 'vendor/bin/phpcs',
 				standard: 'phpcs.xml.dist',
 				showSniffCodes: true
 			}
