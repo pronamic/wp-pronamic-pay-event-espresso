@@ -204,7 +204,7 @@ class IDealGateway extends EE_Offsite_Gateway {
 				'TXN_ID'              => $transaction_id,
 				'STS_ID'              => EEM_Payment::status_id_approved,
 				'PAY_timestamp'       => $transaction->datetime(),
-				'PAY_amount'          => $pronamic_payment->amount,
+				'PAY_amount'          => $pronamic_payment->get_amount()->get_amount(),
 				'PAY_gateway'         => __( 'iDEAL', 'pronamic_ideal' ),
 				'PAY_txn_id_chq_nmbr' => $transaction_id,
 			) );
