@@ -19,7 +19,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.1.3
+ * @version 2.0.0
  * @since   1.0.1
  */
 class IDealGateway extends EE_Offsite_Gateway {

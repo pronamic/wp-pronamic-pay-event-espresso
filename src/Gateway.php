@@ -14,14 +14,14 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 1.1.5
+ * @version 2.0.0
  * @since   1.1.0
  */
 class Gateway extends EE_Offsite_Gateway {
 	/**
 	 * Payment method.
 	 *
-	 * @since unreleased
+	 * @since 2.0.0
 	 *
 	 * @var string $payment_method
 	 */

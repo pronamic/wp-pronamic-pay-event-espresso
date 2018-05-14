@@ -12,14 +12,14 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Reüel van der Steege
- * @version unreleased
- * @since   unreleased
+ * @version 2.0.0
+ * @since   2.0.0
  */
 class DirectDebitPaymentMethod extends PaymentMethod {
 	/**
 	 * Payment method.
 	 *
-	 * @since unreleased
+	 * @since 2.0.0
 	 *
 	 * @var string $payment_method
 	 */
