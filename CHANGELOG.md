@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.0.0] - 2018-05-14
+- Switched to PHP namespaces.
+
 ## [1.1.6] - 2017-01-25
 - Added filter for payment source description and URL.
 
@@ -48,7 +51,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.6...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.6...2.0.0
 [1.1.6]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.3...1.1.4

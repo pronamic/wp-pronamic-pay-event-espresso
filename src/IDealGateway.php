@@ -1,28 +1,44 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
+
+use EE_Line_Item;
+use EE_Offsite_Gateway;
+use EE_Payment;
+use EE_Transaction;
+use EEM_Gateways;
+use EEM_Payment;
+use Pronamic\WordPress\Pay\Admin\AdminModule;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
+use Pronamic\WordPress\Pay\Plugin;
+
 /**
  * Title: WordPress pay Event Espresso iDEAL gateway
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.1.3
- * @since 1.0.1
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.1
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_Gateway {
+class IDealGateway extends EE_Offsite_Gateway {
 	/**
 	 * Instance
+	 *
+	 * @var _instance Gateway instance.
 	 */
 	private static $_instance = null;
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Instance
+	 * Instance.
+	 *
+	 * @param EEM_Gateways $model Gateway model.
+	 *
+	 * @return IDealGateway
 	 */
 	public static function instance( EEM_Gateways $model ) {
-		// check if class object is instantiated
+		// Check if class object is instantiated.
 		if ( null === self::$_instance || ! is_object( self::$_instance ) || ! ( self::$_instance instanceof self ) ) {
 			self::$_instance = new self( $model );
 		}
@@ -30,26 +46,20 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		return self::$_instance;
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Constructs and initialize iDEAL gateway
+	 * Constructs and initialize iDEAL gateway.
 	 *
-	 * @param EEM_Gateways $model
+	 * @param EEM_Gateways $model Gateway model.
 	 */
 	public function __construct( EEM_Gateways $model ) {
 		$this->_gateway_name = 'pronamic_pay_ideal';
 		$this->_path         = str_replace( '\\', '/', __FILE__ );
-		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_btn_img      = plugins_url( 'images/ideal/ee-4-icon.png', Plugin::$file );
 
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Offsite_Gateway.class.php#L4
 		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L26
 		parent::__construct( $model );
 	}
-
-	//////////////////////////////////////////////////
-	// Abstract functions
-	//////////////////////////////////////////////////
 
 	/**
 	 * Default settings
@@ -59,7 +69,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 */
 	protected function _default_settings() {
 		$this->_payment_settings['display_name'] = __( 'iDEAL', 'pronamic_ideal' );
-		$this->_payment_settings['button_url']   = plugins_url( 'images/ideal/ee-4-icon.png', Pronamic_WP_Pay_Plugin::$file );
+		$this->_payment_settings['button_url']   = plugins_url( 'images/ideal/ee-4-icon.png', Plugin::$file );
 		$this->_payment_settings['current_path'] = '';
 	}
 
@@ -83,12 +93,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 		?>
 		<tr>
 			<th>
-				<label><?php _e( 'Configuration', 'pronamic_ideal' ); ?></label>
+				<label><?php esc_html_e( 'Configuration', 'pronamic_ideal' ); ?></label>
 			</th>
 			<td>
 				<?php
 
-				echo Pronamic_WP_Pay_Admin::dropdown_configs( array(
+				echo AdminModule::dropdown_configs( array( // WPCS: xss ok.
 					'name'     => 'config_id',
 					'selected' => $this->_payment_settings['config_id'],
 				) );
@@ -104,32 +114,32 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Gateway.class.php#L86
 	 *
-	 * @param string $selected_gateway
+	 * @param string $selected_gateway Selected gateway.
 	 */
 	public function espresso_display_payment_gateways( $selected_gateway = '' ) {
 		$this->_css_class = ( $selected_gateway === $this->_gateway_name ) ? '' : ' hidden';
 
-		echo $this->_generate_payment_gateway_selection_button();
+		echo $this->_generate_payment_gateway_selection_button(); // WPCS: xss ok.
 
 		$config_id = $this->_payment_settings['config_id'];
 
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+		$gateway = Plugin::get_gateway( $config_id );
 
-		$gateway->set_payment_method( Pronamic_WP_Pay_PaymentMethods::IDEAL );
+		$gateway->set_payment_method( PaymentMethods::IDEAL );
 
 		?>
-		<div id="reg-page-billing-info-<?php echo $this->_gateway_name; ?>-dv" class="reg-page-billing-info-dv <?php echo $this->_css_class; ?>">
-			<h3><?php _e( 'You have selected "iDEAL" as your method of payment', 'pronamic_ideal' ); ?></h3>
-			<p><?php _e( 'After finalizing your registration, you will be transferred to iDEAL where your payment will be securely processed.', 'pronamic_ideal' ); ?></p>
+		<div id="reg-page-billing-info-<?php echo esc_attr( $this->_gateway_name ); ?>-dv" class="reg-page-billing-info-dv <?php echo esc_attr( $this->_css_class ); ?>">
+			<h3><?php esc_html_e( 'You have selected "iDEAL" as your method of payment', 'pronamic_ideal' ); ?></h3>
+			<p><?php esc_html_e( 'After finalizing your registration, you will be transferred to iDEAL where your payment will be securely processed.', 'pronamic_ideal' ); ?></p>
 
 			<?php
-			echo $gateway->get_input_html();
+
+			echo $gateway->get_input_html(); // WPCS: xss ok.
+
 			?>
 		</div>
 		<?php
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Display settings help
@@ -137,16 +147,13 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/modules/gateways/Paypal_Standard/EE_Paypal_Standard.class.php#L302-L345
 	 */
 	protected function _display_settings_help() {
-
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
-	 * Process payment start
+	 * Process payment start.
 	 *
-	 * @param EE_Line_Item $total_line_item
-	 * @param $transaction
+	 * @param EE_Line_Item   $total_line_item Total line item.
+	 * @param EE_Transaction $transaction     Transaction.
 	 */
 	public function process_payment_start( EE_Line_Item $total_line_item, $transaction = null ) {
 		if ( ! $transaction ) {
@@ -155,53 +162,57 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$config_id = $this->_payment_settings['config_id'];
 
-		$gateway = Pronamic_WP_Pay_Plugin::get_gateway( $config_id );
+		$gateway = Plugin::get_gateway( $config_id );
 
-		if ( $gateway ) {
-			$data = new Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData( $this, $total_line_item, $transaction );
+		if ( ! $gateway ) {
+			return;
+		}
 
-			$payment = Pronamic_WP_Pay_Plugin::start( $config_id, $gateway, $data );
+		$data = new PaymentData( $this, $total_line_item, $transaction );
 
-			$error = $gateway->get_error();
+		$payment = Plugin::start( $config_id, $gateway, $data );
 
-			if ( ! is_wp_error( $error ) ) {
-				$offsite_form = $this->submitPayment();
+		$error = $gateway->get_error();
 
-				$offsite_form['form'] = $gateway->get_form_html( $payment, true );
+		if ( ! is_wp_error( $error ) ) {
+			$offsite_form = $this->submitPayment();
 
-				$this->_EEM_Gateways->set_off_site_form( $offsite_form );
+			$offsite_form['form'] = $gateway->get_form_html( $payment, true );
 
-				$this->redirect_after_reg_step_3();
-			}
+			$this->_EEM_Gateways->set_off_site_form( $offsite_form );
+
+			$this->redirect_after_reg_step_3();
 		}
 	}
 
 	/**
 	 * Handle IPN for transaction
+	 *
+	 * @param EE_Transaction $transaction
 	 */
 	public function handle_ipn_for_transaction( EE_Transaction $transaction ) {
 		global $pronamic_payment, $pronamic_url;
 
 		// Transaction ID
-	    $transaction_id = $transaction->ID();
+		$transaction_id = $transaction->ID();
 
-	    // Payment
-	    $payment = $this->_PAY->get_payment_by_txn_id_chq_nmbr( $transaction_id );
+		// Payment
+		$payment = $this->_PAY->get_payment_by_txn_id_chq_nmbr( $transaction_id );
 
-	    if ( empty( $payment ) ) {
+		if ( empty( $payment ) ) {
 			$payment = EE_Payment::new_instance( array(
 				'TXN_ID'              => $transaction_id,
 				'STS_ID'              => EEM_Payment::status_id_approved,
 				'PAY_timestamp'       => $transaction->datetime(),
-				'PAY_amount'          => $pronamic_payment->amount,
+				'PAY_amount'          => $pronamic_payment->get_amount()->get_amount(),
 				'PAY_gateway'         => __( 'iDEAL', 'pronamic_ideal' ),
 				'PAY_txn_id_chq_nmbr' => $transaction_id,
 			) );
-	    } else {
+		} else {
 			$payment->set_status( EEM_Payment::status_id_approved );
-	    }
+		}
 
-	    // Save
+		// Save
 		$payment->save();
 
 		// URL
@@ -209,7 +220,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway extends EE_Offsite_G
 
 		$pronamic_url = $this->_get_return_url( $registration );
 
-		// Return update
-		return $this->update_transaction_with_payment( $transaction, $payment );
+		// Update
+		$this->update_transaction_with_payment( $transaction, $payment );
 	}
 }

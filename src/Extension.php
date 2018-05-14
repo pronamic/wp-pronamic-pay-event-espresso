@@ -1,24 +1,38 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
+
+use EE_Config;
+use EE_Registry;
+use EEM_Gateways;
+use EEM_Transaction;
+use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\Payment;
+
 /**
  * Title: WordPress pay Event Espresso extension
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.1.6
- * @since 1.0.2
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.2
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
+class Extension {
+	/**
+	 * Slug
+	 *
+	 * @var string
+	 */
+	const SLUG = 'eventespresso';
+
 	/**
 	 * Bootstrap
 	 */
 	public static function bootstrap() {
 		new self();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Constructs and initalize an Event Espresso extension
@@ -27,8 +41,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		// Actions
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Is active
@@ -40,30 +52,29 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Plugins loaded
 	 */
 	public function plugins_loaded() {
-		if ( defined( 'EVENT_ESPRESSO_VERSION' ) ) {
-			if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '>=' ) ) {
-				$this->init_ee4dot6plus();
-			} elseif ( version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' ) && version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) {
-				$this->init_ee4_to_ee4dot6();
-			}
-
-			// Actions
-			add_filter( 'pronamic_payment_source_text_eventespresso', array( $this, 'source_text' ), 10, 2 );
-			add_filter( 'pronamic_payment_source_description_eventespresso', array( $this, 'source_description' ), 10, 2 );
-			add_filter( 'pronamic_payment_source_url_eventespresso', array( $this, 'source_url' ), 10, 2 );
-
-			add_action( 'pronamic_payment_status_update_eventespresso', array( $this, 'status_update' ), 10, 2 );
-			add_action( 'pronamic_payment_status_update_eventespresso_unknown_to_success', array( $this, 'update_status_unknown_to_success' ), 10, 2 );
+		if ( ! defined( 'EVENT_ESPRESSO_VERSION' ) ) {
+			return;
 		}
-	}
 
-	//////////////////////////////////////////////////
+		if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '>=' ) ) {
+			$this->init_ee4dot6plus();
+		} elseif ( version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' ) && version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) {
+			$this->init_ee4_to_ee4dot6();
+		}
+
+		// Actions
+		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_text_' . self::SLUG, array( $this, 'source_text' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( $this, 'source_description' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
+
+		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10, 2 );
+		add_action( 'pronamic_payment_status_update__' . self::SLUG . '_unknown_to_success', array( $this, 'update_status_unknown_to_success' ), 10, 2 );
+	}
 
 	/**
 	 * Initialize Event Espresso 4.6+
@@ -80,58 +91,58 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L383-L398
 	 */
 	public function load_espresso_addons() {
-		if ( class_exists( 'EE_Addon' ) ) {
-			/*
-			 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
-			 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
-			 */
-			Pronamic_WP_Pay_Extensions_EventEspresso_AddOn::register_addon();
+		if ( ! class_exists( 'EE_Addon' ) ) {
+			return;
 		}
-	}
 
-	//////////////////////////////////////////////////
+		/*
+		 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
+		 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
+		 */
+		AddOn::register_addon();
+	}
 
 	/**
 	 * Initialize Event Espresso > 4.0 < 4.6
 	 */
 	private function init_ee4_to_ee4dot6() {
-		if ( class_exists( 'EE_Offsite_Gateway' ) ) {
-			$gateways = array(
-				'pronamic_pay_ideal' => 'Pronamic_WP_Pay_Extensions_EventEspresso_IDealGateway',
-			);
+		if ( ! class_exists( 'EE_Offsite_Gateway' ) ) {
+			return;
+		}
 
-			foreach ( $gateways as $gateway => $alias ) {
-				// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L217
-				$class_name = 'EE_' . $gateway;
+		$gateways = array(
+			'pronamic_pay_ideal' => 'Pronamic\WordPress\Pay\Extensions\EventEspresso\IDealGateway',
+		);
 
-				class_alias( $alias, $class_name );
+		foreach ( $gateways as $gateway => $alias ) {
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L217
+			$class_name = 'EE_' . $gateway;
 
-				// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L198-L201
-				if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
-					$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
-					$gateway_class = $gateway_dir . '/' . $class_name . '.class.php';
+			class_alias( $alias, $class_name );
 
-					if ( ! is_readable( $gateway_class ) ) {
-						$created = wp_mkdir_p( $gateway_dir );
+			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_models/EEM_Gateways.model.php#L198-L201
+			if ( defined( 'EVENT_ESPRESSO_GATEWAY_DIR' ) ) {
+				$gateway_dir   = EVENT_ESPRESSO_GATEWAY_DIR . $gateway;
+				$gateway_class = $gateway_dir . '/' . $class_name . '.class.php';
 
-						if ( $created ) {
-							touch( $gateway_class );
-						}
+				if ( ! is_readable( $gateway_class ) ) {
+					$created = wp_mkdir_p( $gateway_dir );
+
+					if ( $created ) {
+						touch( $gateway_class );
 					}
 				}
 			}
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Update lead status of the specified payment
 	 *
-	 * @param Pronamic_Pay_Payment $payment
-	 * @param bool                 $can_redirect
+	 * @param Payment $payment
+	 * @param bool    $can_redirect
 	 */
-	public static function status_update( Pronamic_Pay_Payment $payment, $can_redirect = true ) {
+	public static function status_update( Payment $payment, $can_redirect = true ) {
 		// Get return URLs
 		$url_return  = get_post_meta( $payment->get_id(), '_pronamic_payment_url_return', true );
 		$url_success = get_post_meta( $payment->get_id(), '_pronamic_payment_url_success', true );
@@ -139,28 +150,28 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		$url_error   = get_post_meta( $payment->get_id(), '_pronamic_payment_url_error', true );
 
 		$url    = $url_return;
-		$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::PENDING;
+		$status = PaymentStatuses::PENDING;
 
 		// Status
 		switch ( $payment->get_status() ) {
-			case Pronamic_WP_Pay_Statuses::CANCELLED :
+			case Statuses::CANCELLED:
 				$url    = $url_cancel;
-				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::CANCELLED;
+				$status = PaymentStatuses::CANCELLED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::EXPIRED :
+			case Statuses::EXPIRED:
 				$url    = $url_error;
-				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
+				$status = PaymentStatuses::FAILED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::FAILURE :
+			case Statuses::FAILURE:
 				$url    = $url_error;
-				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::FAILED;
+				$status = PaymentStatuses::FAILED;
 
 				break;
-			case Pronamic_WP_Pay_Statuses::SUCCESS :
+			case Statuses::SUCCESS:
 				$url    = $url_success;
-				$status = Pronamic_WP_Pay_Extensions_EventEspresso_PaymentStatuses::APPROVED;
+				$status = PaymentStatuses::APPROVED;
 
 				break;
 		}
@@ -172,7 +183,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 			$ee_payment            = $ee_transaction->last_payment();
 
 			if ( $transaction_processor->reg_step_completed( $ee_transaction, 'finalize_registration' ) ) {
-				// Set redirect URL to thank you page
+				// Set redirect URL to thank you page.
 				$url = EE_Config::instance()->core->thank_you_page_url( array(
 					'e_reg_url_link'    => $ee_transaction->primary_registration()->reg_url_link(),
 					'ee_payment_method' => 'pronamic',
@@ -189,7 +200,7 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 			}
 		}
 
-		// Redirect
+		// Redirect.
 		if ( $can_redirect ) {
 			wp_redirect( $url );
 
@@ -197,66 +208,101 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 		}
 	}
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Update lead status of the specified payment
 	 *
-	 * @param Pronamic_Pay_Payment $payment
-	 * @param bool                 $can_redirect
+	 * @param Payment $payment
+	 * @param bool    $can_redirect
 	 */
-	public function update_status_unknown_to_success( Pronamic_Pay_Payment $payment, $can_redirect = false ) {
+	public function update_status_unknown_to_success( Payment $payment, $can_redirect = false ) {
+		// Check for Eevent Espresso version 4.0 to 4.6.
 		if ( ! ( version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' ) && version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) ) {
 			return;
 		}
 
-		// Eevent Espresso 4.0 to 4.6
 		$gateway = EEM_Gateways::instance()->get_gateway( 'pronamic_pay_ideal' );
 
-		if ( $gateway ) {
-			$transaction_id = $payment->get_source_id();
+		if ( ! $gateway ) {
+			return;
+		}
 
-			// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/admin_pages/transactions/Transactions_Admin_Page.core.php#L332-L337
-			$transaction_model = EEM_Transaction::instance();
+		$transaction_id = $payment->get_source_id();
 
-			$transaction = $transaction_model->get_one_by_ID( $transaction_id );
+		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/admin_pages/transactions/Transactions_Admin_Page.core.php#L332-L337
+		$transaction_model = EEM_Transaction::instance();
 
-			global $pronamic_payment, $pronamic_url;
+		$transaction = $transaction_model->get_one_by_ID( $transaction_id );
 
-			$pronamic_payment = $payment;
+		global $pronamic_payment, $pronamic_url;
 
-			$gateway->handle_ipn_for_transaction( $transaction );
+		$pronamic_payment = $payment;
 
-			unset( $pronamic_payment );
+		$gateway->handle_ipn_for_transaction( $transaction );
 
-			// Redirect URL
-			if ( $can_redirect ) {
-				wp_redirect( $pronamic_url, 303 );
+		unset( $pronamic_payment );
 
-				exit;
-			}
-	    }
+		// Redirect.
+		if ( $can_redirect ) {
+			wp_redirect( $pronamic_url, 303 );
+
+			exit;
+		}
 	}
 
-	//////////////////////////////////////////////////
+	/**
+	 * Payment redirect URL filter.
+	 *
+	 * @param string  $url
+	 * @param Payment $payment
+	 *
+	 * @return string
+	 */
+	public static function redirect_url( $url, Payment $payment ) {
+		$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_return', true );
+
+		switch ( $payment->get_status() ) {
+			case Statuses::CANCELLED:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', true );
+
+				break;
+			case Statuses::FAILURE:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_error', true );
+
+				break;
+			case Statuses::SUCCESS:
+				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_success', true );
+
+				break;
+		}
+
+		if ( ! empty( $redirect_url ) ) {
+			return $redirect_url;
+		}
+
+		return $url;
+	}
 
 	/**
 	 * Source column
+	 *
+	 * @param string  $text
+	 * @param Payment $payment
+	 *
+	 * @return string
 	 */
-	public static function source_text( $text, Pronamic_Pay_Payment $payment ) {
+	public static function source_text( $text, Payment $payment ) {
 		$url = add_query_arg( array(
 			'page'   => 'espresso_transactions',
 			'action' => 'view_transaction',
 			'TXN_ID' => $payment->get_source_id(),
 		), admin_url( 'admin.php' ) );
 
-		$text  = '';
-
-		$text .= __( 'Event Espresso', 'pronamic_ideal' ) . '<br />';
+		$text = __( 'Event Espresso', 'pronamic_ideal' ) . '<br />';
 
 		$text .= sprintf(
 			'<a href="%s">%s</a>',
 			esc_attr( $url ),
+			/* translators: %s: payment source id */
 			sprintf( __( 'Transaction %s', 'pronamic_ideal' ), $payment->get_source_id() )
 		);
 
@@ -265,23 +311,29 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_Extension {
 
 	/**
 	 * Source description.
+	 *
+	 * @param string  $description
+	 * @param Payment $payment
+	 *
+	 * @return string
 	 */
-	public function source_description( $description, Pronamic_Pay_Payment $payment ) {
-		$description = __( 'Event Espresso Transaction', 'pronamic_ideal' );
-
-		return $description;
+	public function source_description( $description, Payment $payment ) {
+		return __( 'Event Espresso Transaction', 'pronamic_ideal' );
 	}
 
 	/**
 	 * Source URL.
+	 *
+	 * @param string  $url
+	 * @param Payment $payment
+	 *
+	 * @return string
 	 */
-	public function source_url( $url, Pronamic_Pay_Payment $payment ) {
-		$url = add_query_arg( array(
+	public function source_url( $url, Payment $payment ) {
+		return add_query_arg( array(
 			'page'   => 'espresso_transactions',
 			'action' => 'view_transaction',
 			'TXN_ID' => $payment->get_source_id(),
 		), admin_url( 'admin.php' ) );
-
-		return $url;
 	}
 }

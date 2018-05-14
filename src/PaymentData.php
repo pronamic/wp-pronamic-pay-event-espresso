@@ -1,16 +1,24 @@
 <?php
 
+namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
+
+use EE_Line_Item;
+use EE_Transaction;
+use Pronamic\WordPress\Pay\Payments\PaymentData as Pay_PaymentData;
+use Pronamic\WordPress\Pay\Payments\Item;
+use Pronamic\WordPress\Pay\Payments\Items;
+
 /**
  * Title: WordPress pay Event Espresso payment data
  * Description:
- * Copyright: Copyright (c) 2005 - 2017
+ * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
- * @author Remco Tolsma
- * @version 1.1.5
- * @since 1.0.0
+ * @author  Remco Tolsma
+ * @version 2.0.0
+ * @since   1.0.0
  */
-class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_Pay_PaymentData {
+class PaymentData extends Pay_PaymentData {
 	/**
 	 * Line item
 	 *
@@ -27,12 +35,12 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	 */
 	private $transaction;
 
-	//////////////////////////////////////////////////
-
 	/**
 	 * Constructs and initializes an WooCommerce iDEAL data proxy
 	 *
-	 * @param WC_Order $order
+	 * @param                $gateway
+	 * @param EE_Line_Item   $line_item
+	 * @param EE_Transaction $transaction
 	 */
 	public function __construct( $gateway, EE_Line_Item $line_item, EE_Transaction $transaction ) {
 		parent::__construct();
@@ -44,8 +52,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 		$this->primary_registrant = $transaction->primary_registration();
 		$this->primary_attendee   = $this->primary_registrant->attendee();
 	}
-
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get source indicator
@@ -61,9 +67,8 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 		return $this->transaction->ID();
 	}
 
-	//////////////////////////////////////////////////
-
 	public function get_title() {
+		/* translators: %s: order id */
 		return sprintf( __( 'Event Espresso transaction %s', 'pronamic_ideal' ), $this->get_order_id() );
 	}
 
@@ -109,15 +114,15 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	 * Get items
 	 *
 	 * @see Pronamic_Pay_PaymentDataInterface::get_items()
-	 * @return Pronamic_IDeal_Items
+	 * @return Items
 	 */
 	public function get_items() {
 		// Items
-		$items = new Pronamic_IDeal_Items();
+		$items = new Items();
 
 		// Item
 		// We only add one total item, because iDEAL cant work with negative price items (discount)
-		$item = new Pronamic_IDeal_Item();
+		$item = new Item();
 		$item->setNumber( $this->get_order_id() );
 		$item->setDescription( $this->get_description() );
 		$item->setPrice( $this->transaction->total() );
@@ -128,10 +133,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 		return $items;
 	}
 
-	//////////////////////////////////////////////////
-	// Currency
-	//////////////////////////////////////////////////
-
 	/**
 	 * Get currency
 	 *
@@ -141,10 +142,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	public function get_currency_alphabetic_code() {
 		return 'EUR';
 	}
-
-	//////////////////////////////////////////////////
-	// Customer
-	//////////////////////////////////////////////////
 
 	public function get_email() {
 		return $this->primary_attendee->email();
@@ -165,10 +162,6 @@ class Pronamic_WP_Pay_Extensions_EventEspresso_PaymentData extends Pronamic_WP_P
 	public function get_zip() {
 		return null;
 	}
-
-	//////////////////////////////////////////////////
-	// URL's
-	//////////////////////////////////////////////////
 
 	/**
 	 * Get normal return URL
