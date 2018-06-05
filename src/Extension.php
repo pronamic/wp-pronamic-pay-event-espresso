@@ -74,6 +74,22 @@ class Extension {
 
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10, 2 );
 		add_action( 'pronamic_payment_status_update__' . self::SLUG . '_unknown_to_success', array( $this, 'update_status_unknown_to_success' ), 10, 2 );
+
+		add_action( 'AHEE__EE_Transaction_Processor__update_transaction_and_registrations_after_checkout_or_payment', array( $this, 'remove_registration_update_notifications' ), 15, 2 );
+	}
+
+	/**
+	 * Remove registration update notifications trigger action.
+	 *
+	 * @param EEM_Transaction $transaction   Transaction.
+	 * @param array           $update_params Update parameters.
+	 */
+	public function remove_registration_update_notifications( $transaction, $update_params ) {
+		$payment = get_pronamic_payment_by_meta( '_pronamic_payment_source_id', $transaction->ID() );
+
+		if ( null !== $payment ) {
+			remove_action( 'AHEE__EE_Registration_Processor__trigger_registration_update_notifications', array( 'EED_Messages', 'maybe_registration' ), 10, 2 );
+		}
 	}
 
 	/**
