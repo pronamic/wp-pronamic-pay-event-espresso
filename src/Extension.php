@@ -214,15 +214,6 @@ class Extension {
 
 				$payment_processor = EE_Registry::instance()->load_core( 'Payment_Processor' );
 				$payment_processor->update_txn_based_on_payment( $ee_transaction, $ee_payment, true, true );
-
-				// Remove scheduled event to prevent updating transaction and sending notifications twice.
-				wp_clear_scheduled_hook(
-					'AHEE__EE_Cron_Tasks__update_transaction_with_payment_2',
-					array(
-						$ee_transaction->ID(),
-						$ee_payment->ID(),
-					)
-				);
 			}
 		}
 
