@@ -192,6 +192,7 @@ class Extension {
 
 			// Payment status has changed, save.
 			if ( $ee_payment && $ee_payment->status() !== $status ) {
+				$ee_payment->set_txn_id_chq_nmbr( $payment->get_transaction_id() );
 				$ee_payment->set_status( $status );
 				$ee_payment->save();
 
