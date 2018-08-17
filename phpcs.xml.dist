@@ -7,29 +7,22 @@
 
 	<config name="testVersion" value="5.3-99.0" />
 
+	<exclude-pattern>node_modules/*</exclude-pattern>
+	<exclude-pattern>tests/wp-config.php</exclude-pattern>
+	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>wordpress/*</exclude-pattern>
+	<exclude-pattern>wp-content/*</exclude-pattern>
+
 	<rule ref="PHPCompatibility" />
 
 	<rule ref="WordPress">
 		<exclude name="Generic.Files.LowercasedFilename.NotFound" />
 
-		<exclude name="Squiz.Commenting" />
-
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-
-        <exclude name="WordPress.VIP.FileSystemWritesDisallow.file_ops_touch" />
-		<exclude name="WordPress.VIP.FileSystemWritesDisallow.FileWriteDetected" />
-        <exclude name="WordPress.VIP.RestrictedFunctions.wp_redirect_wp_redirect" />
-		<exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
-
-		<exclude name="WordPress.XSS.EscapeOutput" />
 	</rule>
 
 	<rule ref="WordPress.Files.FileName.UnderscoresNotAllowed">
 		<exclude-pattern>/src/ee/*</exclude-pattern>
 	</rule>
-
-    <rule ref="PSR2.Methods.MethodDeclaration.Underscore">
-        <exclude-pattern>/src/IDealGateway.php</exclude-pattern>
-    </rule>
 </ruleset>
