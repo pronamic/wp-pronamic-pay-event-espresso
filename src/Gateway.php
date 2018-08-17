@@ -6,6 +6,7 @@ use EE_Error;
 use EE_Offsite_Gateway;
 use EEI_Payment;
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Core\Statuses;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
@@ -41,11 +42,30 @@ class Gateway extends EE_Offsite_Gateway {
 	protected $_config_id;
 
 	/**
+	 * Currencies supported.
+	 *
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/docs/L--Payment-Methods-and-Gateways/gateway-classes.md
+	 * @var array
+	 */
+	protected $_currencies_supported = array(
+		'EUR',
+	);
+
+	/**
 	 * Transaction description.
 	 *
 	 * @since 1.1.5
 	 */
 	protected $_transaction_description;
+
+	/**
+	 * Construct.
+	 */
+	public function __construct() {
+		$this->set_uses_separate_IPN_request( true );
+
+		parent::__construct();
+	}
 
 	/**
 	 * Get the gateay configuration ID
@@ -148,6 +168,37 @@ class Gateway extends EE_Offsite_Gateway {
 	 * @param $transaction
 	 */
 	public function handle_payment_update( $update_info, $transaction ) {
-		// Nothing to do here, this is handled from the Extension class.
+		if ( ! array_key_exists( 'pronamic_payment_status', $update_info ) ) {
+			return;
+		}
+
+		$payment = $transaction->last_payment();
+
+		if ( empty( $payment ) ) {
+			return;
+		}
+
+		$status = $update_info['pronamic_payment_status'];
+
+		switch ( $status ) {
+			case Statuses::CANCELLED:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::EXPIRED:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::FAILURE:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::SUCCESS:
+				$payment->set_status( $this->_pay_model->approved_status() );
+
+				break;
+		}
+
+		return $payment;
 	}
 }
