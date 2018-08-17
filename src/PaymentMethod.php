@@ -1,4 +1,12 @@
 <?php
+/**
+ * Payment method
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
+ */
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
@@ -37,7 +45,7 @@ class PaymentMethod extends EE_PMT_Base {
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
-	 * @param EE_Payment_Method $pm_instance
+	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
 		if ( null === $this->payment_method ) {
@@ -52,9 +60,8 @@ class PaymentMethod extends EE_PMT_Base {
 	/**
 	 * Creates the billing form for this payment method type.
 	 *
-	 * @param \EE_Transaction $transaction
-	 *
-	 * @return NULL
+	 * @param \EE_Transaction $transaction Event Espresso transaction.
+	 * @return EE_Billing_Info_Form|null
 	 */
 	public function generate_new_billing_form( EE_Transaction $transaction = null ) {
 		$config_id = $this->_gateway->get_config_id();
@@ -95,7 +102,7 @@ class PaymentMethod extends EE_PMT_Base {
 		$config_options = Plugin::get_config_select_options( $this->payment_method );
 
 		// Fix for incorrect normalization strategy
-		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113
+		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113.
 		$select_option = $config_options[0];
 
 		unset( $config_options[0] );
@@ -133,6 +140,8 @@ class PaymentMethod extends EE_PMT_Base {
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L575-L583
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
+	 *
+	 * @return string
 	 */
 	public function system_name() {
 		return 'Pronamic';

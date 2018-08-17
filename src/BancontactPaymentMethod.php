@@ -1,4 +1,12 @@
 <?php
+/**
+ * Bancontact payment method
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
+ */
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
@@ -28,7 +36,7 @@ class BancontactPaymentMethod extends PaymentMethod {
 	/**
 	 * Constructs and initializes an Event Espresso payment method
 	 *
-	 * @param EE_Payment_Method $pm_instance
+	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new BancontactGateway();
