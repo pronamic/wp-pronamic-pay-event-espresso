@@ -1,4 +1,12 @@
 <?php
+/**
+ * Sofort payment method
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
+ */
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
@@ -6,13 +14,13 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 
 /**
- * Title: WordPress pay Event Espresso 4.6+ Sofort payment method
+ * Title: WordPress pay Event Espresso Sofort payment method
  * Description:
  * Copyright: Copyright (c) 2005 - 2018
  * Company: Pronamic
  *
  * @author  Reüel van der Steege
- * @version 2.0.0
+ * @version 2.1.0
  * @since   2.0.0
  */
 class SofortPaymentMethod extends PaymentMethod {
@@ -26,9 +34,9 @@ class SofortPaymentMethod extends PaymentMethod {
 	protected $payment_method = PaymentMethods::SOFORT;
 
 	/**
-	 * Constructs and initializes an Event Espresso payment method
+	 * Constructs and initializes an Event Espresso payment method.
 	 *
-	 * @param EE_Payment_Method $pm_instance
+	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
 		$this->_gateway            = new SofortGateway();

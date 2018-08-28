@@ -1,11 +1,21 @@
 <?php
+/**
+ * Gateway
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
+ */
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
 use EE_Error;
 use EE_Offsite_Gateway;
+use EEI_Transaction;
 use EEI_Payment;
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Core\Statuses;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
@@ -14,7 +24,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.1.0
  * @since   1.1.0
  */
 class Gateway extends EE_Offsite_Gateway {
@@ -41,14 +51,34 @@ class Gateway extends EE_Offsite_Gateway {
 	protected $_config_id;
 
 	/**
+	 * Currencies supported.
+	 *
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/docs/L--Payment-Methods-and-Gateways/gateway-classes.md
+	 * @var array
+	 */
+	protected $_currencies_supported = array(
+		'EUR',
+	);
+
+	/**
 	 * Transaction description.
 	 *
 	 * @since 1.1.5
+	 * @var string
 	 */
 	protected $_transaction_description;
 
 	/**
-	 * Get the gateay configuration ID
+	 * Construct.
+	 */
+	public function __construct() {
+		$this->set_uses_separate_IPN_request( true );
+
+		parent::__construct();
+	}
+
+	/**
+	 * Get the gateay configuration ID.
 	 *
 	 * @return string
 	 */
@@ -57,7 +87,7 @@ class Gateway extends EE_Offsite_Gateway {
 	}
 
 	/**
-	 * Get the gateway transaction description
+	 * Get the gateway transaction description.
 	 *
 	 * @since 1.1.5
 	 * @return string
@@ -67,17 +97,17 @@ class Gateway extends EE_Offsite_Gateway {
 	}
 
 	/**
-	 * Set redirection info
+	 * Set redirection info.
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L51-L59
 	 *
-	 * @param             $ee_payment
-	 * @param array       $billing_info
-	 * @param string      $return_url
-	 * @param null        $notify_url
-	 * @param string      $cancel_url
-	 *
+	 * @param EEI_Payment $ee_payment   Event Espresso payment.
+	 * @param array       $billing_info Billing info.
+	 * @param string      $return_url   Return URL.
+	 * @param null        $notify_url   Notify URL.
+	 * @param string      $cancel_url   Cancel URL.
 	 * @return EEI_Payment
+	 * @throws EE_Error Throws Event Espresso error if gateway or payment can't be initiated.
 	 */
 	public function set_redirection_info( $ee_payment, $billing_info = array(), $return_url = null, $notify_url = null, $cancel_url = null ) {
 		$gateway = Plugin::get_gateway( $this->_config_id );
@@ -144,10 +174,42 @@ class Gateway extends EE_Offsite_Gateway {
 	 *
 	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L63-L71
 	 *
-	 * @param $update_info
-	 * @param $transaction
+	 * @param array           $update_info Update info, pften the contents of $_REQUEST, but not necessarily.
+	 * @param EEI_Transaction $transaction Event Espresso transaction.
+	 * @return EEI_Payment
 	 */
 	public function handle_payment_update( $update_info, $transaction ) {
-		// Nothing to do here, this is handled from the Extension class.
+		if ( ! array_key_exists( 'pronamic_payment_status', $update_info ) ) {
+			return;
+		}
+
+		$payment = $transaction->last_payment();
+
+		if ( empty( $payment ) ) {
+			return;
+		}
+
+		$status = $update_info['pronamic_payment_status'];
+
+		switch ( $status ) {
+			case Statuses::CANCELLED:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::EXPIRED:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::FAILURE:
+				$payment->set_status( $this->_pay_model->failed_status() );
+
+				break;
+			case Statuses::SUCCESS:
+				$payment->set_status( $this->_pay_model->approved_status() );
+
+				break;
+		}
+
+		return $payment;
 	}
 }

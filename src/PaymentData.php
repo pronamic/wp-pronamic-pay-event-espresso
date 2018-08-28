@@ -1,4 +1,12 @@
 <?php
+/**
+ * Payment data
+ *
+ * @author    Pronamic <info@pronamic.eu>
+ * @copyright 2005-2018 Pronamic
+ * @license   GPL-3.0-or-later
+ * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
+ */
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
@@ -15,7 +23,7 @@ use Pronamic\WordPress\Pay\Payments\Items;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.0.0
+ * @version 2.1.0
  * @since   1.0.0
  */
 class PaymentData extends Pay_PaymentData {
@@ -36,11 +44,11 @@ class PaymentData extends Pay_PaymentData {
 	private $transaction;
 
 	/**
-	 * Constructs and initializes an WooCommerce iDEAL data proxy
+	 * Constructs and initializes an Event Espresso payment data object.
 	 *
-	 * @param                $gateway
-	 * @param EE_Line_Item   $line_item
-	 * @param EE_Transaction $transaction
+	 * @param Gateway        $gateway     Gateway.
+	 * @param EE_Line_Item   $line_item   Event Espresso line item.
+	 * @param EE_Transaction $transaction Event Espresso transaction.
 	 */
 	public function __construct( $gateway, EE_Line_Item $line_item, EE_Transaction $transaction ) {
 		parent::__construct();
@@ -63,17 +71,27 @@ class PaymentData extends Pay_PaymentData {
 		return 'eventespresso';
 	}
 
+	/**
+	 * Get source ID.
+	 *
+	 * @return string
+	 */
 	public function get_source_id() {
 		return $this->transaction->ID();
 	}
 
+	/**
+	 * Get title.
+	 *
+	 * @return string
+	 */
 	public function get_title() {
 		/* translators: %s: order id */
 		return sprintf( __( 'Event Espresso transaction %s', 'pronamic_ideal' ), $this->get_order_id() );
 	}
 
 	/**
-	 * Get description
+	 * Get description.
 	 *
 	 * @see Pronamic_Pay_PaymentDataInterface::get_description()
 	 * @return string
@@ -117,11 +135,11 @@ class PaymentData extends Pay_PaymentData {
 	 * @return Items
 	 */
 	public function get_items() {
-		// Items
+		// Items.
 		$items = new Items();
 
-		// Item
-		// We only add one total item, because iDEAL cant work with negative price items (discount)
+		// Item.
+		// We only add one total item, because iDEAL cant work with negative price items (discount).
 		$item = new Item();
 		$item->setNumber( $this->get_order_id() );
 		$item->setDescription( $this->get_description() );
@@ -143,22 +161,47 @@ class PaymentData extends Pay_PaymentData {
 		return 'EUR';
 	}
 
+	/**
+	 * Get email.
+	 *
+	 * @return string
+	 */
 	public function get_email() {
 		return $this->primary_attendee->email();
 	}
 
+	/**
+	 * Get customer name.
+	 *
+	 * @return string
+	 */
 	public function get_customer_name() {
 		return $this->primary_attendee->fname() . ' ' . $this->primary_attendee->lname();
 	}
 
+	/**
+	 * Get address.
+	 *
+	 * @return string
+	 */
 	public function get_address() {
 		return null;
 	}
 
+	/**
+	 * Get city.
+	 *
+	 * @return string
+	 */
 	public function get_city() {
 		return null;
 	}
 
+	/**
+	 * Get ZIP.
+	 *
+	 * @return string
+	 */
 	public function get_zip() {
 		return null;
 	}
@@ -173,14 +216,29 @@ class PaymentData extends Pay_PaymentData {
 		return null;
 	}
 
+	/**
+	 * Get cancel URL.
+	 *
+	 * @return string
+	 */
 	public function get_cancel_url() {
 		return null;
 	}
 
+	/**
+	 * Get success URL.
+	 *
+	 * @return string
+	 */
 	public function get_success_url() {
 		return null;
 	}
 
+	/**
+	 * Get error URL.
+	 *
+	 * @return string
+	 */
 	public function get_error_url() {
 		return null;
 	}
