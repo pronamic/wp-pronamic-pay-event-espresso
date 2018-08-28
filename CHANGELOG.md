@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.0] - 2018-08-28
+- Complete rewrite of the library.
+- Removed support for Event Espresso version older than 4.6.
+
 ## [2.0.0] - 2018-05-14
 - Switched to PHP namespaces.
 
