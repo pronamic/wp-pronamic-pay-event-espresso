@@ -162,11 +162,14 @@ class Extension {
 	 * @return string
 	 */
 	public static function source_text( $text, Payment $payment ) {
-		$url = add_query_arg( array(
-			'page'   => 'espresso_transactions',
-			'action' => 'view_transaction',
-			'TXN_ID' => $payment->get_source_id(),
-		), admin_url( 'admin.php' ) );
+		$url = add_query_arg(
+			array(
+				'page'   => 'espresso_transactions',
+				'action' => 'view_transaction',
+				'TXN_ID' => $payment->get_source_id(),
+			),
+			admin_url( 'admin.php' )
+		);
 
 		$text = __( 'Event Espresso', 'pronamic_ideal' ) . '<br />';
 
@@ -201,10 +204,13 @@ class Extension {
 	 * @return string
 	 */
 	public function source_url( $url, Payment $payment ) {
-		return add_query_arg( array(
-			'page'   => 'espresso_transactions',
-			'action' => 'view_transaction',
-			'TXN_ID' => $payment->get_source_id(),
-		), admin_url( 'admin.php' ) );
+		return add_query_arg(
+			array(
+				'page'   => 'espresso_transactions',
+				'action' => 'view_transaction',
+				'TXN_ID' => $payment->get_source_id(),
+			),
+			admin_url( 'admin.php' )
+		);
 	}
 }

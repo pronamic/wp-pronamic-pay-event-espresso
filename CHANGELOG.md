@@ -7,6 +7,10 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.1] - 2018-09-28
+- Use updated iDEAL gateway class name.
+- Use cards icon as default icon for Pronamic payment method too.
+
 ## [2.1.0] - 2018-08-28
 - Complete rewrite of the library.
 - Removed support for Event Espresso version older than 4.6.
@@ -44,7 +48,7 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 - Added experimental support for Event Espresso 4.6 (or higher).
 
 ## [1.0.3] - 2015-03-03
-- Changed WordPress pay core library requirment from ~1.0.0 to >=1.0.0.
+- Changed WordPress pay core library requirment from `~1.0.0` to `>=1.0.0`.
 
 ## [1.0.2] - 2015-02-16
 - Fixed fatal error on Event Espresso version 4.6 (or higher).
@@ -55,7 +59,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.0.0...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.1...HEAD
+[2.1.1]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.0...2.1.1
+[2.1.0]: https://github.com/wp-pay-extensions/event-espresso/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.6...2.0.0
 [1.1.6]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.4...1.1.5
