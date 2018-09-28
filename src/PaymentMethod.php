@@ -29,7 +29,7 @@ use Pronamic\WordPress\Pay\Plugin;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.1
  * @since   1.1.0
  */
 class PaymentMethod extends EE_PMT_Base {
@@ -109,25 +109,27 @@ class PaymentMethod extends EE_PMT_Base {
 
 		$config_options = array( 'select' => $select_option ) + $config_options;
 
-		$form = new EE_Payment_Method_Form( array(
-			'extra_meta_inputs' => array(
-				'config_id'               => new EE_Select_Input(
-					$config_options,
-					array(
-						'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
-						'default'         => get_option( 'pronamic_pay_config_id' ),
-					)
+		$form = new EE_Payment_Method_Form(
+			array(
+				'extra_meta_inputs' => array(
+					'config_id'               => new EE_Select_Input(
+						$config_options,
+						array(
+							'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
+							'default'         => get_option( 'pronamic_pay_config_id' ),
+						)
+					),
+					'transaction_description' => new EE_Text_Input(
+						array(
+							'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
+							/* translators: %s: <code>{transaction_id}</code> */
+							'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
+							'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
+						)
+					),
 				),
-				'transaction_description' => new EE_Text_Input(
-					array(
-						'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
-						/* translators: %s: <code>{transaction_id}</code> */
-						'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
-						'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
-					)
-				),
-			),
-		) );
+			)
+		);
 
 		return $form;
 	}
