@@ -30,7 +30,7 @@ class PaymentData extends Pay_PaymentData {
 	/**
 	 * Line item
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Line_Item.class.php#L26
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Line_Item.class.php#L26
 	 * @var EE_Line_Item
 	 */
 	private $line_item;
@@ -38,7 +38,7 @@ class PaymentData extends Pay_PaymentData {
 	/**
 	 * Transaction
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Transaction.class.php#L25
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/core/db_classes/EE_Transaction.class.php#L25
 	 * @var EE_Transaction
 	 */
 	private $transaction;

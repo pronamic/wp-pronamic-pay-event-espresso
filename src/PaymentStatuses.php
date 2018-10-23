@@ -24,35 +24,35 @@ class PaymentStatuses {
 	/**
 	 * Status approved
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L19-L22
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L19-L22
 	 */
 	const APPROVED = 'PAP';
 
 	/**
 	 * Pending
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L25-L28
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L25-L28
 	 */
 	const PENDING = 'PPN';
 
 	/**
 	 * Cancelled
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L31-L35
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L31-L35
 	 */
 	const CANCELLED = 'PCN';
 
 	/**
 	 * Declined
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L39-L43
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L39-L43
 	 */
 	const DECLINED = 'PDC';
 
 	/**
 	 * Failed
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L47-L51
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/db_models/EEM_Payment.model.php#L47-L51
 	 */
 	const FAILED = 'PFL';
 }

@@ -102,7 +102,7 @@ class PaymentMethod extends EE_PMT_Base {
 		$config_options = Plugin::get_config_select_options( $this->payment_method );
 
 		// Fix for incorrect normalization strategy
-		// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113.
+		// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/form_sections/inputs/EE_Form_Input_With_Options_Base.input.php#L89-L113.
 		$select_option = $config_options[0];
 
 		unset( $config_options[0] );
@@ -140,8 +140,8 @@ class PaymentMethod extends EE_PMT_Base {
 	 * We have to override the `system_name` function since we don't follow the
 	 * Event Espresso class name syntax.
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L575-L583
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L575-L583
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
 	 *
 	 * @return string
 	 */

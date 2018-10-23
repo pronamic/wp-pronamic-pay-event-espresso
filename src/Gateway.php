@@ -43,8 +43,8 @@ class Gateway extends EE_Offsite_Gateway {
 	 * Extra meta inputs on payment method settings forms are magically loaded
 	 * into class variables like this one ($_config_id).
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L181-L183
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Gateway.lib.php#L158-L168
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L181-L183
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Gateway.lib.php#L158-L168
 	 *
 	 * @var string
 	 */
@@ -99,7 +99,7 @@ class Gateway extends EE_Offsite_Gateway {
 	/**
 	 * Set redirection info.
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L51-L59
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L51-L59
 	 *
 	 * @param EEI_Payment $ee_payment   Event Espresso payment.
 	 * @param array       $billing_info Billing info.
@@ -115,7 +115,7 @@ class Gateway extends EE_Offsite_Gateway {
 		if ( ! $gateway ) {
 			$error = Plugin::get_default_error_message();
 
-			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
 			throw new EE_Error( $error );
 		}
 
@@ -130,7 +130,7 @@ class Gateway extends EE_Offsite_Gateway {
 		$error = $gateway->get_error();
 
 		if ( is_wp_error( $error ) ) {
-			// @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
 			$error_message = sprintf(
 				/* translators: %s: error message */
 				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
@@ -155,8 +155,8 @@ class Gateway extends EE_Offsite_Gateway {
 			 * Otherwise the URL query arguments will be stripped by the users browser.
 			 * Therefor we have to make sure the redirect arguments array is not empty.
 			 *
-			 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547
-			 * @see http://stackoverflow.com/q/1116019
+			 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547
+			 * @link http://stackoverflow.com/q/1116019
 			 */
 			if ( false !== strpos( $redirect_url, '?' ) && empty( $redirect_args ) ) {
 				$redirect_args[] = '';
@@ -172,7 +172,7 @@ class Gateway extends EE_Offsite_Gateway {
 	/**
 	 * Handle payment update
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L63-L71
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_Offsite_Gateway.lib.php#L63-L71
 	 *
 	 * @param array           $update_info Update info, pften the contents of $_REQUEST, but not necessarily.
 	 * @param EEI_Transaction $transaction Event Espresso transaction.
