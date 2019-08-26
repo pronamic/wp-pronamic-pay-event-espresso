@@ -3,7 +3,7 @@
  * Extension
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -21,7 +21,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
 /**
  * Title: WordPress pay Event Espresso extension
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -57,7 +57,7 @@ class Extension {
 	 * @return boolean True if active, false otherwise.
 	 */
 	public static function is_active() {
-		// @see https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
+		// @link https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
 		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
 	}
 
@@ -87,15 +87,15 @@ class Extension {
 	/**
 	 * Load Espresso addons.
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L162-L163
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L383-L398
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L162-L163
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/core/EE_System.core.php#L383-L398
 	 *
 	 * @hooked AHEE__EE_System__load_espresso_addons - 10 - https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/core/EE_System.core.php#L378
 	 */
 	public function load_espresso_addons() {
 		/*
-		 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
-		 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
+		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
+		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
 		 */
 		AddOn::register_addon();
 	}

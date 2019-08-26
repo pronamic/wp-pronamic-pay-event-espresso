@@ -3,7 +3,7 @@
  * IDEAL payment method
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2018 Pronamic
+ * @copyright 2005-2019 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -16,7 +16,7 @@ use Pronamic\WordPress\Pay\Plugin;
 /**
  * Title: WordPress pay Event Espresso 4.6+ iDEAL payment method
  * Description:
- * Copyright: Copyright (c) 2005 - 2018
+ * Copyright: 2005-2019 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -52,8 +52,8 @@ class IDealPaymentMethod extends PaymentMethod {
 	 * We have to override the `system_name` function since we don't follow the
 	 * Event Espresso class name syntax.
 	 *
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L575-L583
-	 * @see https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/core/libraries/payment_methods/EE_PMT_Base.lib.php#L575-L583
+	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.17.p/admin_pages/payments/Payments_Admin_Page.core.php#L305
 	 */
 	public function system_name() {
 		return 'Pronamic_IDeal';
