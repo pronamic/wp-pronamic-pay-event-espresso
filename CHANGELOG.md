@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.1.2] - 2019-08-26
+- Updated packages.
+
 ## [2.1.1] - 2018-09-28
 - Use updated iDEAL gateway class name.
 - Use cards icon as default icon for Pronamic payment method too.
@@ -59,7 +62,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.1...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.2...HEAD
+[2.1.2]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.1...2.1.2
 [2.1.1]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.0...2.1.1
 [2.1.0]: https://github.com/wp-pay-extensions/event-espresso/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/wp-pay-extensions/event-espresso/compare/1.1.6...2.0.0
