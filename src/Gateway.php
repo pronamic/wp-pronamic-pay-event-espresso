@@ -125,22 +125,9 @@ class Gateway extends EE_Offsite_Gateway {
 
 		$data = new PaymentData( $this, $total_line_item, $transaction );
 
-		$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
+		try {
+			$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
 
-		$error = $gateway->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
-			$error_message = sprintf(
-				/* translators: %s: error message */
-				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
-				implode( ',', $error->get_error_messages() )
-			);
-
-			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
-
-			throw new EE_Error( $error_message );
-		} else {
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_return', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_success', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
@@ -164,6 +151,17 @@ class Gateway extends EE_Offsite_Gateway {
 
 			$ee_payment->set_redirect_url( $redirect_url );
 			$ee_payment->set_redirect_args( $redirect_args );
+		} catch ( \Pronamic\WordPress\Pay\PayException $e ) {
+			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			$error_message = sprintf(
+				/* translators: %s: error message */
+				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
+				implode( ',', $e->get_message() )
+			);
+
+			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
+
+			throw new EE_Error( $error_message );
 		}
 
 		return $ee_payment;
