@@ -15,7 +15,7 @@ use EE_Payment_Processor;
 use EE_Registry;
 use EEM_Gateways;
 use EEM_Transaction;
-use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
@@ -132,15 +132,15 @@ class Extension {
 		$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_return', true );
 
 		switch ( $payment->get_status() ) {
-			case Statuses::CANCELLED:
+			case PaymentStatus::CANCELLED:
 				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', true );
 
 				break;
-			case Statuses::FAILURE:
+			case PaymentStatus::FAILURE:
 				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_error', true );
 
 				break;
-			case Statuses::SUCCESS:
+			case PaymentStatus::SUCCESS:
 				$redirect_url = get_post_meta( $payment->get_id(), '_pronamic_payment_url_success', true );
 
 				break;

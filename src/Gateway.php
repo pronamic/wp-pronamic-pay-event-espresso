@@ -15,7 +15,7 @@ use EE_Offsite_Gateway;
 use EEI_Transaction;
 use EEI_Payment;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
@@ -190,19 +190,19 @@ class Gateway extends EE_Offsite_Gateway {
 		$status = $update_info['pronamic_payment_status'];
 
 		switch ( $status ) {
-			case Statuses::CANCELLED:
+			case PaymentStatus::CANCELLED:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::EXPIRED:
+			case PaymentStatus::EXPIRED:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::FAILURE:
+			case PaymentStatus::FAILURE:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::SUCCESS:
+			case PaymentStatus::SUCCESS:
 				$payment->set_status( $this->_pay_model->approved_status() );
 
 				break;
