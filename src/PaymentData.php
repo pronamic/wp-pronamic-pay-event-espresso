@@ -146,7 +146,7 @@ class PaymentData extends Pay_PaymentData {
 		$item->setPrice( $this->transaction->total() );
 		$item->setQuantity( 1 );
 
-		$items->addItem( $item );
+		$items->add_item( $item );
 
 		return $items;
 	}
