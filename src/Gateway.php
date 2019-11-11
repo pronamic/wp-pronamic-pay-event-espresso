@@ -151,12 +151,12 @@ class Gateway extends EE_Offsite_Gateway {
 
 			$ee_payment->set_redirect_url( $redirect_url );
 			$ee_payment->set_redirect_args( $redirect_args );
-		} catch ( \Pronamic\WordPress\Pay\PayException $e ) {
+		} catch ( \Exception $e ) {
 			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
 			$error_message = sprintf(
 				/* translators: %s: error message */
 				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
-				implode( ',', $e->get_message() )
+				implode( ',', $e->getMessage() )
 			);
 
 			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
