@@ -134,7 +134,7 @@ class Gateway extends EE_Offsite_Gateway {
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
 			$redirect_url  = $payment->get_pay_redirect_url();
-			$redirect_args = $gateway->get_output_fields();
+			$redirect_args = $gateway->get_output_fields( $payment );
 
 			/*
 			 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
