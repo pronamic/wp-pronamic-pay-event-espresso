@@ -24,7 +24,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.3
  * @since   1.1.0
  */
 class Gateway extends EE_Offsite_Gateway {
