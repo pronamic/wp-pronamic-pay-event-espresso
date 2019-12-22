@@ -23,7 +23,7 @@ use Pronamic\WordPress\Pay\Payments\Items;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.3
  * @since   1.0.0
  */
 class PaymentData extends Pay_PaymentData {
@@ -146,7 +146,7 @@ class PaymentData extends Pay_PaymentData {
 		$item->setPrice( $this->transaction->total() );
 		$item->setQuantity( 1 );
 
-		$items->addItem( $item );
+		$items->add_item( $item );
 
 		return $items;
 	}

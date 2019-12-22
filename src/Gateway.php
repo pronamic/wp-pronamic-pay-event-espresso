@@ -15,7 +15,7 @@ use EE_Offsite_Gateway;
 use EEI_Transaction;
 use EEI_Payment;
 use Pronamic\WordPress\Pay\Plugin;
-use Pronamic\WordPress\Pay\Core\Statuses;
+use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
@@ -24,7 +24,7 @@ use Pronamic\WordPress\Pay\Core\Statuses;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.1.0
+ * @version 2.1.3
  * @since   1.1.0
  */
 class Gateway extends EE_Offsite_Gateway {
@@ -125,29 +125,16 @@ class Gateway extends EE_Offsite_Gateway {
 
 		$data = new PaymentData( $this, $total_line_item, $transaction );
 
-		$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
+		try {
+			$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
 
-		$error = $gateway->get_error();
-
-		if ( is_wp_error( $error ) ) {
-			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
-			$error_message = sprintf(
-				/* translators: %s: error message */
-				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
-				implode( ',', $error->get_error_messages() )
-			);
-
-			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
-
-			throw new EE_Error( $error_message );
-		} else {
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_return', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_success', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_cancel', $cancel_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_error', $cancel_url );
 
 			$redirect_url  = $payment->get_pay_redirect_url();
-			$redirect_args = $gateway->get_output_fields();
+			$redirect_args = $gateway->get_output_fields( $payment );
 
 			/*
 			 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
@@ -164,6 +151,17 @@ class Gateway extends EE_Offsite_Gateway {
 
 			$ee_payment->set_redirect_url( $redirect_url );
 			$ee_payment->set_redirect_args( $redirect_args );
+		} catch ( \Exception $e ) {
+			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
+			$error_message = sprintf(
+				/* translators: %s: error message */
+				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
+				implode( ',', $e->getMessage() )
+			);
+
+			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
+
+			throw new EE_Error( $error_message );
 		}
 
 		return $ee_payment;
@@ -192,19 +190,19 @@ class Gateway extends EE_Offsite_Gateway {
 		$status = $update_info['pronamic_payment_status'];
 
 		switch ( $status ) {
-			case Statuses::CANCELLED:
+			case PaymentStatus::CANCELLED:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::EXPIRED:
+			case PaymentStatus::EXPIRED:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::FAILURE:
+			case PaymentStatus::FAILURE:
 				$payment->set_status( $this->_pay_model->failed_status() );
 
 				break;
-			case Statuses::SUCCESS:
+			case PaymentStatus::SUCCESS:
 				$payment->set_status( $this->_pay_model->approved_status() );
 
 				break;
