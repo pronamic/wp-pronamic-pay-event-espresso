@@ -15,6 +15,7 @@ use EE_Payment_Processor;
 use EE_Registry;
 use EEM_Gateways;
 use EEM_Transaction;
+use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
@@ -28,7 +29,7 @@ use Pronamic\WordPress\Pay\Payments\Payment;
  * @version 2.1.3
  * @since   1.0.2
  */
-class Extension {
+class Extension extends AbstractPluginIntegration {
 	/**
 	 * Slug.
 	 *
@@ -37,50 +38,34 @@ class Extension {
 	const SLUG = 'eventespresso';
 
 	/**
-	 * Bootstrap.
-	 */
-	public static function bootstrap() {
-		new self();
-	}
-
-	/**
 	 * Constructs and initalize Event Espresso extension.s
 	 */
 	public function __construct() {
-		// Actions.
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
-	}
+		parent::__construct();
 
-	/**
-	 * Is active.
-	 *
-	 * @return boolean True if active, false otherwise.
-	 */
-	public static function is_active() {
-		// @link https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
-		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
+		// Dependencies.
+		$dependencies = $this->get_dependencies();
+
+		$dependencies->add( new EventEspressoDependency() );
 	}
 
 	/**
 	 * Plugins loaded.
 	 */
 	public function plugins_loaded() {
-		if ( ! defined( 'EVENT_ESPRESSO_VERSION' ) ) {
-			return;
-		}
-
-		if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) {
-			return;
-		}
-
-		// Actions.
-		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'load_espresso_addons' ) );
-
-		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
 		add_filter( 'pronamic_payment_source_text_' . self::SLUG, array( $this, 'source_text' ), 10, 2 );
 		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( $this, 'source_description' ), 10, 2 );
 		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
 
+		// Actions.
+		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'load_espresso_addons' ) );
+
+		// Test to see if the Event Espresso plugin is active, then add all actions.
+		if ( ! $this->get_dependencies()->are_met() ) {
+			return;
+		}
+
+		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10 );
 	}
 
