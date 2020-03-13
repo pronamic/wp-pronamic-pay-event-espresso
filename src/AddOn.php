@@ -38,60 +38,29 @@ class AddOn extends EE_Addon {
 			dirname( __FILE__ ) . '/ee/payment-methods/Pronamic',
 		);
 
-		if ( PaymentMethods::is_active( PaymentMethods::ALIPAY ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Alipay';
-		}
+		$payment_methods = array(
+			PaymentMethods::ALIPAY        => 'Pronamic_Alipay',
+			PaymentMethods::BANCONTACT    => 'Pronamic_Bancontact',
+			PaymentMethods::BANK_TRANSFER => 'Pronamic_BankTransfer',
+			PaymentMethods::BELFIUS       => 'Pronamic_Belfius',
+			PaymentMethods::BITCOIN       => 'Pronamic_Bitcoin',
+			PaymentMethods::CREDIT_CARD   => 'Pronamic_CreditCard',
+			PaymentMethods::DIRECT_DEBIT  => 'Pronamic_DirectDebit',
+			PaymentMethods::GIROPAY       => 'Pronamic_Giropay',
+			PaymentMethods::IDEAL         => 'Pronamic_IDeal',
+			PaymentMethods::IDEALQR       => 'Pronamic_IDealQR',
+			PaymentMethods::KBC           => 'Pronamic_KBC',
+			PaymentMethods::PAYCONIQ      => 'Pronamic_Payconiq',
+			PaymentMethods::PAYPAL        => 'Pronamic_PayPal',
+			PaymentMethods::SOFORT        => 'Pronamic_Sofort',
+		);
 
-		if ( PaymentMethods::is_active( PaymentMethods::BANCONTACT ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Bancontact';
-		}
+		foreach ( $payment_methods as $payment_method => $ee_payment_method ) {
+			if ( ! PaymentMethods::is_active( $payment_method ) ) {
+				continue;
+			}
 
-		if ( PaymentMethods::is_active( PaymentMethods::BANK_TRANSFER ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_BankTransfer';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::BELFIUS ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Belfius';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::BITCOIN ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Bitcoin';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::CREDIT_CARD ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_CreditCard';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::DIRECT_DEBIT ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_DirectDebit';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::GIROPAY ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Giropay';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::IDEAL ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_IDeal';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::IDEALQR ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_IDealQR';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::KBC ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_KBC';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::PAYCONIQ ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Payconiq';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::PAYPAL ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_PayPal';
-		}
-
-		if ( PaymentMethods::is_active( PaymentMethods::SOFORT ) ) {
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/Pronamic_Sofort';
+			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/' . $ee_payment_method;
 		}
 
 		EE_Register_Addon::register(
