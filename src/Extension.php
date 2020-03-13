@@ -50,21 +50,23 @@ class Extension extends AbstractPluginIntegration {
 	}
 
 	/**
-	 * Plugins loaded.
+	 * Setup plugin integration.
+	 *
+	 * @return void
 	 */
-	public function plugins_loaded() {
+	public function setup() {
 		add_filter( 'pronamic_payment_source_text_' . self::SLUG, array( $this, 'source_text' ), 10, 2 );
 		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( $this, 'source_description' ), 10, 2 );
-		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
 
-		// Actions.
-		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'load_espresso_addons' ) );
-
-		// Test to see if the Event Espresso plugin is active, then add all actions.
-		if ( ! $this->get_dependencies()->are_met() ) {
+		// Check if dependencies are met and integration is active.
+		if ( ! $this->is_active() ) {
 			return;
 		}
 
+		// Actions.
+		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'register_addon' ) );
+
+		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
 		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10 );
 	}
@@ -77,14 +79,13 @@ class Extension extends AbstractPluginIntegration {
 	 *
 	 * @hooked AHEE__EE_System__load_espresso_addons - 10 - https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/core/EE_System.core.php#L378
 	 */
-	public function load_espresso_addons() {
+	public function register_addon() {
 		/*
 		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
 		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
 		 */
 		AddOn::register_addon();
 	}
-
 
 	/**
 	 * Update lead status of the specified payment.
