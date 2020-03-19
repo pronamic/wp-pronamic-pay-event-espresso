@@ -3,7 +3,7 @@
  * Extension
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2019 Pronamic
+ * @copyright 2005-2020 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -15,20 +15,21 @@ use EE_Payment_Processor;
 use EE_Registry;
 use EEM_Gateways;
 use EEM_Transaction;
+use Pronamic\WordPress\Pay\AbstractPluginIntegration;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 use Pronamic\WordPress\Pay\Payments\Payment;
 
 /**
  * Title: WordPress pay Event Espresso extension
  * Description:
- * Copyright: 2005-2019 Pronamic
+ * Copyright: 2005-2020 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
  * @version 2.1.3
  * @since   1.0.2
  */
-class Extension {
+class Extension extends AbstractPluginIntegration {
 	/**
 	 * Slug.
 	 *
@@ -37,50 +38,36 @@ class Extension {
 	const SLUG = 'eventespresso';
 
 	/**
-	 * Bootstrap.
-	 */
-	public static function bootstrap() {
-		new self();
-	}
-
-	/**
 	 * Constructs and initalize Event Espresso extension.s
 	 */
 	public function __construct() {
-		// Actions.
-		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ), 0 );
+		parent::__construct();
+
+		// Dependencies.
+		$dependencies = $this->get_dependencies();
+
+		$dependencies->add( new EventEspressoDependency() );
 	}
 
 	/**
-	 * Is active.
+	 * Setup plugin integration.
 	 *
-	 * @return boolean True if active, false otherwise.
+	 * @return void
 	 */
-	public static function is_active() {
-		// @link https://github.com/eventespresso/event-espresso-core/blob/4.2.2.reg/espresso.php#L53
-		return defined( 'EVENT_ESPRESSO_VERSION' ) && version_compare( EVENT_ESPRESSO_VERSION, '4', '>=' );
-	}
-
-	/**
-	 * Plugins loaded.
-	 */
-	public function plugins_loaded() {
-		if ( ! defined( 'EVENT_ESPRESSO_VERSION' ) ) {
-			return;
-		}
-
-		if ( version_compare( EVENT_ESPRESSO_VERSION, '4.6', '<' ) ) {
-			return;
-		}
-
-		// Actions.
-		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'load_espresso_addons' ) );
-
-		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
+	public function setup() {
 		add_filter( 'pronamic_payment_source_text_' . self::SLUG, array( $this, 'source_text' ), 10, 2 );
 		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( $this, 'source_description' ), 10, 2 );
-		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
 
+		// Check if dependencies are met and integration is active.
+		if ( ! $this->is_active() ) {
+			return;
+		}
+
+		// Actions.
+		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'register_addon' ) );
+
+		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
+		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
 		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10 );
 	}
 
@@ -92,14 +79,13 @@ class Extension {
 	 *
 	 * @hooked AHEE__EE_System__load_espresso_addons - 10 - https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/core/EE_System.core.php#L378
 	 */
-	public function load_espresso_addons() {
+	public function register_addon() {
 		/*
 		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/espresso-new-payment-method.php#L45
 		 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.16.p/tests/mocks/addons/new-payment-method/EE_New_Payment_Method.class.php#L26-L46
 		 */
 		AddOn::register_addon();
 	}
-
 
 	/**
 	 * Update lead status of the specified payment.
