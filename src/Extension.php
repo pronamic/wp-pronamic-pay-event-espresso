@@ -41,7 +41,11 @@ class Extension extends AbstractPluginIntegration {
 	 * Constructs and initalize Event Espresso extension.s
 	 */
 	public function __construct() {
-		parent::__construct();
+		parent::__construct(
+			array(
+				'name' => __( 'Event Espresso', 'pronamic_ideal' ),
+			)
+		);
 
 		// Dependencies.
 		$dependencies = $this->get_dependencies();

@@ -7,6 +7,9 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [2.2.1] - 2020-04-03
+- Set plugin integration name.
+
 ## [2.2.0] - 2020-03-19
 - Extension extends from abstract plugin integration.
 
@@ -71,7 +74,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.2.0...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.2.1...HEAD
+[2.2.1]: https://github.com/wp-pay-extensions/event-espresso/compare/2.2.0...2.2.1
 [2.2.0]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.3...2.2.0
 [2.1.3]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.2...2.1.3
 [2.1.2]: https://github.com/wp-pay-extensions/event-espresso/compare/2.1.1...2.1.2
