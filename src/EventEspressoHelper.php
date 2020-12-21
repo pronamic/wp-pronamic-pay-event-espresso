@@ -11,7 +11,9 @@
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
 use Pronamic\WordPress\Pay\ContactName;
+use Pronamic\WordPress\Pay\ContactNameHelper;
 use Pronamic\WordPress\Pay\Customer;
+use Pronamic\WordPress\Pay\CustomerHelper;
 
 /**
  * Event Espresso Helper
@@ -65,59 +67,19 @@ class EventEspressoHelper {
 	 * Get customer from attendee.
 	 */
 	public static function get_customer_from_attendee( $attendee ) {
-		$name  = self::get_name_from_attendee( $attendee );
-		$email = $attendee->email();
-
-		$customer_data = array(
-			$name,
-			$email,
-		);
-
-		$customer_data = \array_filter( $customer_data );
-
-		if ( empty( $customer_data ) ) {
-			return null;
-		}
-
-		$customer = new Customer();
-
-		$customer->set_name( $name );
-
-		if ( ! empty( $email ) ) {
-			$customer->set_email( $email );
-		}
-
-		return $customer;
+		return CustomerHelper::from_array( array(
+			'name'  => self::get_name_from_attendee( $attendee ),
+			'email' => $attendee->email(),
+		) );
 	}
 
 	/**
 	 * Get name from primary attendee.
 	 */
 	public static function get_name_from_attendee( $attendee ) {
-		$first_name = $attendee->fname();
-		$last_name  = $attendee->lname();
-
-		$name_data = array(
-			$first_name,
-			$last_name,
-		);
-
-		$name_data = \array_filter( $name_data );
-
-		if ( empty( $name_data ) ) {
-			return null;
-		}
-
-		$name = new ContactName();
-
-		if ( ! empty( $first_name ) ) {
-			$name->set_first_name( $first_name );
-		}
-
-		if ( ! empty( $last_name ) ) {
-			$name->set_last_name( $last_name );
-		}
-		
-		return $name;
+		return ContactNameHelper::from_array( array(
+			'first_name' => $attendee->fname(),
+			'last_name'  => $attendee->lname(),
+		) );
 	}
 }
