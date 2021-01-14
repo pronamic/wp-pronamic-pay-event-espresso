@@ -122,7 +122,7 @@ class PaymentMethod extends EE_PMT_Base {
 					'transaction_description' => new EE_Text_Input(
 						array(
 							'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
-							/* translators: %s: <code>{transaction_id}</code> */
+							/* translators: %s: <code>{tag}</code> */
 							'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
 							'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
 						)

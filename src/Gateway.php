@@ -14,7 +14,10 @@ use EE_Error;
 use EE_Offsite_Gateway;
 use EEI_Transaction;
 use EEI_Payment;
+use Pronamic\WordPress\Money\Currency;
+use Pronamic\WordPress\Money\TaxedMoney;
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
@@ -123,10 +126,39 @@ class Gateway extends EE_Offsite_Gateway {
 
 		$total_line_item = $transaction->total_line_item();
 
-		$data = new PaymentData( $this, $total_line_item, $transaction );
+		$transaction_id = $transaction->ID();
 
+		$primary_attendee = $transaction->primary_registration()->attendee();
+
+		/**
+		 * Build payment.
+		 */
+		$payment = new Payment();
+
+		$payment->source    = 'eventespresso';
+		$payment->source_id = $transaction_id;
+		$payment->order_id  = $transaction_id;
+
+		// Description.
+		$payment->description = EventEspressoHelper::get_description( $transaction_id, $this );
+
+		$payment->title = EventEspressoHelper::get_title( $transaction_id );
+
+		// Customer.
+		$payment->set_customer( EventEspressoHelper::get_customer_from_attendee( $primary_attendee ) );
+
+		// Currency.
+		$currency = Currency::get_instance( 'EUR' );
+
+		// Amount.
+		$payment->set_total_amount( new TaxedMoney( $transaction->total(), $currency ) );
+
+		// Configuration.
+		$payment->config_id = $this->_config_id;
+
+		// Start.
 		try {
-			$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
+			$payment = Plugin::start_payment( $payment );
 
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_return', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_success', $return_url );
