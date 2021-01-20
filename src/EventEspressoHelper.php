@@ -10,6 +10,7 @@
 
 namespace Pronamic\WordPress\Pay\Extensions\EventEspresso;
 
+use EE_Attendee;
 use Pronamic\WordPress\Pay\ContactName;
 use Pronamic\WordPress\Pay\ContactNameHelper;
 use Pronamic\WordPress\Pay\Customer;
@@ -26,11 +27,13 @@ class EventEspressoHelper {
 	/**
 	 * Get title.
 	 *
+	 * @param int|null $transaction_id Transaction ID.
 	 * @return string
 	 */
 	public function get_title( $transaction_id ) {
 		/* translators: %s: order id */
 		return \sprintf(
+			/* translators: %s: transaction ID */
 			\__( 'Event Espresso transaction %s', 'pronamic_ideal' ),
 			$transaction_id
 		);
@@ -39,6 +42,8 @@ class EventEspressoHelper {
 	/**
 	 * Get description.
 	 *
+	 * @param int|null   $transaction_id Transaction ID.
+	 * @param EE_Gateway $gateway        Gateway.
 	 * @return string
 	 */
 	public function get_description( $transaction_id, $gateway ) {
@@ -65,6 +70,9 @@ class EventEspressoHelper {
 
 	/**
 	 * Get customer from attendee.
+	 *
+	 * @param EE_Attendee $attendee Attendee.
+	 * @return Customer|null
 	 */
 	public static function get_customer_from_attendee( $attendee ) {
 		return CustomerHelper::from_array(
@@ -77,6 +85,9 @@ class EventEspressoHelper {
 
 	/**
 	 * Get name from primary attendee.
+	 *
+	 * @param EE_Attendee $attendee Attendee.
+	 * @return ContactName|null
 	 */
 	public static function get_name_from_attendee( $attendee ) {
 		return ContactNameHelper::from_array(
