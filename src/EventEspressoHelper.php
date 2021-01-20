@@ -67,19 +67,23 @@ class EventEspressoHelper {
 	 * Get customer from attendee.
 	 */
 	public static function get_customer_from_attendee( $attendee ) {
-		return CustomerHelper::from_array( array(
-			'name'  => self::get_name_from_attendee( $attendee ),
-			'email' => $attendee->email(),
-		) );
+		return CustomerHelper::from_array(
+			array(
+				'name'  => self::get_name_from_attendee( $attendee ),
+				'email' => $attendee->email(),
+			)
+		);
 	}
 
 	/**
 	 * Get name from primary attendee.
 	 */
 	public static function get_name_from_attendee( $attendee ) {
-		return ContactNameHelper::from_array( array(
-			'first_name' => $attendee->fname(),
-			'last_name'  => $attendee->lname(),
-		) );
+		return ContactNameHelper::from_array(
+			array(
+				'first_name' => $attendee->fname(),
+				'last_name'  => $attendee->lname(),
+			)
+		);
 	}
 }
