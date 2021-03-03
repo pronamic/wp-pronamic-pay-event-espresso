@@ -38,7 +38,7 @@ class Extension extends AbstractPluginIntegration {
 	const SLUG = 'eventespresso';
 
 	/**
-	 * Constructs and initalize Event Espresso extension.s
+	 * Construct and initialize Event Espresso extension.
 	 */
 	public function __construct() {
 		parent::__construct(
