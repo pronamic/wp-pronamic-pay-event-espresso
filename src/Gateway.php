@@ -16,6 +16,7 @@ use EEI_Transaction;
 use EEI_Payment;
 use Pronamic\WordPress\Money\Currency;
 use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
@@ -155,6 +156,15 @@ class Gateway extends EE_Offsite_Gateway {
 
 		// Configuration.
 		$payment->config_id = $this->_config_id;
+
+		// Payment method.
+		$method = $this->payment_method;
+
+		if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
+			$method = PaymentMethods::IDEAL;
+		}
+
+		$payment->method = $method;
 
 		// Start.
 		try {
