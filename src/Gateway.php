@@ -3,7 +3,7 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -14,13 +14,17 @@ use EE_Error;
 use EE_Offsite_Gateway;
 use EEI_Transaction;
 use EEI_Payment;
+use Pronamic\WordPress\Money\Currency;
+use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
+use Pronamic\WordPress\Pay\Payments\Payment;
 use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -78,7 +82,7 @@ class Gateway extends EE_Offsite_Gateway {
 	}
 
 	/**
-	 * Get the gateay configuration ID.
+	 * Get the gateway configuration ID.
 	 *
 	 * @return string
 	 */
@@ -123,10 +127,48 @@ class Gateway extends EE_Offsite_Gateway {
 
 		$total_line_item = $transaction->total_line_item();
 
-		$data = new PaymentData( $this, $total_line_item, $transaction );
+		$transaction_id = $transaction->ID();
 
+		$primary_attendee = $transaction->primary_registration()->attendee();
+
+		/**
+		 * Build payment.
+		 */
+		$payment = new Payment();
+
+		$payment->source    = 'eventespresso';
+		$payment->source_id = $transaction_id;
+		$payment->order_id  = $transaction_id;
+
+		// Description.
+		$payment->description = EventEspressoHelper::get_description( $transaction_id, $this );
+
+		$payment->title = EventEspressoHelper::get_title( $transaction_id );
+
+		// Customer.
+		$payment->set_customer( EventEspressoHelper::get_customer_from_attendee( $primary_attendee ) );
+
+		// Currency.
+		$currency = Currency::get_instance( 'EUR' );
+
+		// Amount.
+		$payment->set_total_amount( new TaxedMoney( $transaction->total(), $currency ) );
+
+		// Configuration.
+		$payment->config_id = $this->_config_id;
+
+		// Payment method.
+		$method = $this->payment_method;
+
+		if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
+			$method = PaymentMethods::IDEAL;
+		}
+
+		$payment->method = $method;
+
+		// Start.
 		try {
-			$payment = Plugin::start( $this->_config_id, $gateway, $data, $this->payment_method );
+			$payment = Plugin::start_payment( $payment );
 
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_return', $return_url );
 			update_post_meta( $payment->get_id(), '_pronamic_payment_url_success', $return_url );
@@ -140,7 +182,7 @@ class Gateway extends EE_Offsite_Gateway {
 			 * Since Event Espresso uses an HTML form to redirect users to the payment gateway
 			 * we have to make sure an POST method is used when the redirect URL has query arguments.
 			 * Otherwise the URL query arguments will be stripped by the users browser.
-			 * Therefor we have to make sure the redirect arguments array is not empty.
+			 * Therefore we have to make sure the redirect arguments array is not empty.
 			 *
 			 * @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/core/db_classes/EE_Payment.class.php#L547
 			 * @link http://stackoverflow.com/q/1116019

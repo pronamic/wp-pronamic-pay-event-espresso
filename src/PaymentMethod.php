@@ -3,7 +3,7 @@
  * Payment method
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2020 Pronamic
+ * @copyright 2005-2021 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -25,7 +25,7 @@ use Pronamic\WordPress\Pay\Plugin;
 /**
  * Title: WordPress pay Event Espresso 4.6+ payment method
  * Description:
- * Copyright: 2005-2020 Pronamic
+ * Copyright: 2005-2021 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -122,7 +122,7 @@ class PaymentMethod extends EE_PMT_Base {
 					'transaction_description' => new EE_Text_Input(
 						array(
 							'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
-							/* translators: %s: <code>{transaction_id}</code> */
+							/* translators: %s: <code>{tag}</code> */
 							'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
 							'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
 						)
