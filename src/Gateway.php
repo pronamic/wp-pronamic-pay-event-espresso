@@ -151,8 +151,18 @@ class Gateway extends EE_Offsite_Gateway {
 		// Currency.
 		$currency = Currency::get_instance( 'EUR' );
 
-		// Amount.
-		$payment->set_total_amount( new TaxedMoney( $transaction->total(), $currency ) );
+		/**
+		 * Amount.
+		 *
+		 * In version 2.3.1 or earlier we used `$transaction->total()`,
+		 * but changed this to `$transaction->remaining()` so that 
+		 * incomplete or manual payments are also included.
+		 *
+		 * @link https://plugins.trac.wordpress.org/browser/event-espresso-decaf/tags/4.10.11.decaf/core/db_classes/EE_Transaction.class.php#L336 `EE_Transaction->total()`
+		 * @link https://plugins.trac.wordpress.org/browser/event-espresso-decaf/tags/4.10.11.decaf/core/db_classes/EE_Transaction.class.php#L320 `EE_Transaction->remaining()`
+		 * @link https://secure.helpscout.net/conversation/1507624590/22038?folderId=1425710
+		 */
+		$payment->set_total_amount( new TaxedMoney( $transaction->remaining(), $currency ) );
 
 		// Configuration.
 		$payment->config_id = $this->_config_id;
