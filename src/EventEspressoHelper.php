@@ -20,7 +20,7 @@ use Pronamic\WordPress\Pay\CustomerHelper;
  * Event Espresso Helper
  *
  * @author  Remco Tolsma
- * @version 2.3.0
+ * @version 2.3.2
  * @since   2.3.0
  */
 class EventEspressoHelper {
@@ -30,7 +30,7 @@ class EventEspressoHelper {
 	 * @param int|null $transaction_id Transaction ID.
 	 * @return string
 	 */
-	public function get_title( $transaction_id ) {
+	public static function get_title( $transaction_id ) {
 		/* translators: %s: order id */
 		return \sprintf(
 			/* translators: %s: transaction ID */
@@ -46,7 +46,7 @@ class EventEspressoHelper {
 	 * @param EE_Gateway $gateway        Gateway.
 	 * @return string
 	 */
-	public function get_description( $transaction_id, $gateway ) {
+	public static function get_description( $transaction_id, $gateway ) {
 		$search = array(
 			'{transaction_id}',
 		);
