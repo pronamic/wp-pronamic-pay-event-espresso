@@ -20,7 +20,7 @@ use Pronamic\WordPress\Pay\CustomerHelper;
  * Event Espresso Helper
  *
  * @author  Remco Tolsma
- * @version 2.3.0
+ * @version 2.3.2
  * @since   2.3.0
  */
 class EventEspressoHelper {

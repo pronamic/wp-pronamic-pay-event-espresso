@@ -28,7 +28,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
  * Company: Pronamic
  *
  * @author  Remco Tolsma
- * @version 2.1.3
+ * @version 2.3.2
  * @since   1.1.0
  */
 class Gateway extends EE_Offsite_Gateway {
@@ -155,7 +155,7 @@ class Gateway extends EE_Offsite_Gateway {
 		 * Amount.
 		 *
 		 * In version 2.3.1 or earlier we used `$transaction->total()`,
-		 * but changed this to `$transaction->remaining()` so that 
+		 * but changed this to `$transaction->remaining()` so that
 		 * incomplete or manual payments are also included.
 		 *
 		 * @link https://plugins.trac.wordpress.org/browser/event-espresso-decaf/tags/4.10.11.decaf/core/db_classes/EE_Transaction.class.php#L336 `EE_Transaction->total()`
