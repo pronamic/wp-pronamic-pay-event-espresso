@@ -7,6 +7,12 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [3.0.0] - 2021-08-05
+- Updated to `pronamic/wp-pay-core`  version `3.0.0`.
+- Updated to `pronamic/wp-money`  version `2.0.0`.
+- Changed `TaxedMoney` to `Money`, no tax info.
+- Switched to `pronamic/wp-coding-standards`.
+
 ## [2.3.2] - 2021-05-11
 - Use `$transaction->remaining()` instead of `$transaction->total()` so that incomplete or manual payments are also included.
 - Fixed "Non-static method EventEspressoHelper::get_description() should not be called statically" warning/error.
@@ -84,7 +90,8 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## 1.0.0 - 2015-01-20
 - First release.
 
-[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/2.3.2...HEAD
+[unreleased]: https://github.com/wp-pay-extensions/event-espresso/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/wp-pay-extensions/event-espresso/compare/2.3.2...3.0.0
 [2.3.2]: https://github.com/wp-pay-extensions/event-espresso/compare/2.3.1...2.3.2
 [2.3.1]: https://github.com/wp-pay-extensions/event-espresso/compare/2.3.0...2.3.1
 [2.3.0]: https://github.com/wp-pay-extensions/event-espresso/compare/2.2.1...2.3.0

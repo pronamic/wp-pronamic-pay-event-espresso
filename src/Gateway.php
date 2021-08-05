@@ -15,7 +15,7 @@ use EE_Offsite_Gateway;
 use EEI_Transaction;
 use EEI_Payment;
 use Pronamic\WordPress\Money\Currency;
-use Pronamic\WordPress\Money\TaxedMoney;
+use Pronamic\WordPress\Money\Money;
 use Pronamic\WordPress\Pay\Core\PaymentMethods;
 use Pronamic\WordPress\Pay\Plugin;
 use Pronamic\WordPress\Pay\Payments\Payment;
@@ -162,7 +162,7 @@ class Gateway extends EE_Offsite_Gateway {
 		 * @link https://plugins.trac.wordpress.org/browser/event-espresso-decaf/tags/4.10.11.decaf/core/db_classes/EE_Transaction.class.php#L320 `EE_Transaction->remaining()`
 		 * @link https://secure.helpscout.net/conversation/1507624590/22038?folderId=1425710
 		 */
-		$payment->set_total_amount( new TaxedMoney( $transaction->remaining(), $currency ) );
+		$payment->set_total_amount( new Money( $transaction->remaining(), $currency ) );
 
 		// Configuration.
 		$payment->config_id = $this->_config_id;
