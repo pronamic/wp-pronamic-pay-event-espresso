@@ -141,7 +141,7 @@ class Gateway extends EE_Offsite_Gateway {
 		$payment->order_id  = $transaction_id;
 
 		// Description.
-		$payment->description = EventEspressoHelper::get_description( $transaction_id, $this );
+		$payment->set_description( EventEspressoHelper::get_description( $transaction_id, $this ) );
 
 		$payment->title = EventEspressoHelper::get_title( $transaction_id );
 
