@@ -168,13 +168,13 @@ class Gateway extends EE_Offsite_Gateway {
 		$payment->config_id = $this->_config_id;
 
 		// Payment method.
-		$method = $this->payment_method;
+		$payment_method = $this->payment_method;
 
-		if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
-			$method = PaymentMethods::IDEAL;
+		if ( null === $payment_method && $gateway->payment_method_is_required() ) {
+			$payment_method = PaymentMethods::IDEAL;
 		}
 
-		$payment->method = $method;
+		$payment->set_payment_method( $payment_method );
 
 		// Start.
 		try {
