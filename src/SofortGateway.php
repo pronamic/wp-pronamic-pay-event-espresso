@@ -3,7 +3,7 @@
  * Sofort gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -15,7 +15,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 /**
  * Title: WordPress pay Event Espresso 4.6+ Sofort gateway
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Reüel van der Steege
