@@ -3,7 +3,7 @@
  * Gateway
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2021 Pronamic
+ * @copyright 2005-2022 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -24,7 +24,7 @@ use Pronamic\WordPress\Pay\Payments\PaymentStatus;
 /**
  * Title: WordPress pay Event Espresso 4.6+ gateway
  * Description:
- * Copyright: 2005-2021 Pronamic
+ * Copyright: 2005-2022 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
@@ -141,7 +141,7 @@ class Gateway extends EE_Offsite_Gateway {
 		$payment->order_id  = $transaction_id;
 
 		// Description.
-		$payment->description = EventEspressoHelper::get_description( $transaction_id, $this );
+		$payment->set_description( EventEspressoHelper::get_description( $transaction_id, $this ) );
 
 		$payment->title = EventEspressoHelper::get_title( $transaction_id );
 
@@ -168,13 +168,13 @@ class Gateway extends EE_Offsite_Gateway {
 		$payment->config_id = $this->_config_id;
 
 		// Payment method.
-		$method = $this->payment_method;
+		$payment_method = $this->payment_method;
 
-		if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
-			$method = PaymentMethods::IDEAL;
+		if ( null === $payment_method && $gateway->payment_method_is_required() ) {
+			$payment_method = PaymentMethods::IDEAL;
 		}
 
-		$payment->method = $method;
+		$payment->set_payment_method( $payment_method );
 
 		// Start.
 		try {
