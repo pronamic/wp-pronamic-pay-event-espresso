@@ -69,12 +69,6 @@ class PaymentMethod extends EE_PMT_Base {
 		$gateway = Plugin::get_gateway( $config_id );
 
 		if ( $gateway ) {
-			$gateway->set_payment_method( $this->payment_method );
-
-			if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
-				$gateway->set_payment_method( PaymentMethods::IDEAL );
-			}
-
 			$form = new EE_Billing_Info_Form(
 				$this->_pm_instance,
 				array(
