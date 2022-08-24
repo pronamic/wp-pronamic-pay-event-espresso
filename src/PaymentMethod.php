@@ -68,27 +68,39 @@ class PaymentMethod extends EE_PMT_Base {
 
 		$gateway = Plugin::get_gateway( $config_id );
 
-		if ( $gateway ) {
-			$gateway->set_payment_method( $this->payment_method );
-
-			if ( null === $this->payment_method && $gateway->payment_method_is_required() ) {
-				$gateway->set_payment_method( PaymentMethods::IDEAL );
-			}
-
-			$form = new EE_Billing_Info_Form(
-				$this->_pm_instance,
-				array(
-					'name'        => 'Pronamic_WP_Pay_Billing_Form',
-					'subsections' => array(
-						'html' => new EE_Form_Section_HTML( $gateway->get_input_html() ),
-					),
-				)
-			);
-
-			return $form;
+		if ( null === $gateway ) {
+			return null;
 		}
 
-		return null;
+		$payment_method = $gateway->get_payment_method();
+
+		if ( null === $payment_method ) {
+			return null;
+		}
+
+		$fields = $payment_method->get_fields();
+
+		if ( empty( $fields ) ) {
+			return null;
+		}
+
+		$output = '';
+
+		foreach ( $fields as $field ) {
+			$output .= $field->render();
+		}
+
+		$form = new EE_Billing_Info_Form(
+			$this->_pm_instance,
+			array(
+				'name'        => 'Pronamic_WP_Pay_Billing_Form',
+				'subsections' => array(
+					'html' => new EE_Form_Section_HTML( $output ),
+				),
+			)
+		);
+
+		return $form;
 	}
 
 	/**
