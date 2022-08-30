@@ -72,7 +72,7 @@ class PaymentMethod extends EE_PMT_Base {
 			return null;
 		}
 
-		$payment_method = $gateway->get_payment_method();
+		$payment_method = $gateway->get_payment_method( $this->payment_method );
 
 		if ( null === $payment_method ) {
 			return null;
