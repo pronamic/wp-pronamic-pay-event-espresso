@@ -92,12 +92,12 @@ class PaymentMethod extends EE_PMT_Base {
 
 		$form = new EE_Billing_Info_Form(
 			$this->_pm_instance,
-			array(
+			[
 				'name'        => 'Pronamic_WP_Pay_Billing_Form',
-				'subsections' => array(
+				'subsections' => [
 					'html' => new EE_Form_Section_HTML( $output ),
-				),
-			)
+				],
+			]
 		);
 
 		return $form;
@@ -119,28 +119,28 @@ class PaymentMethod extends EE_PMT_Base {
 
 		unset( $config_options[0] );
 
-		$config_options = array( 'select' => $select_option ) + $config_options;
+		$config_options = [ 'select' => $select_option ] + $config_options;
 
 		$form = new EE_Payment_Method_Form(
-			array(
-				'extra_meta_inputs' => array(
+			[
+				'extra_meta_inputs' => [
 					'config_id'               => new EE_Select_Input(
 						$config_options,
-						array(
+						[
 							'html_label_text' => __( 'Configuration', 'pronamic_ideal' ),
 							'default'         => get_option( 'pronamic_pay_config_id' ),
-						)
+						]
 					),
 					'transaction_description' => new EE_Text_Input(
-						array(
+						[
 							'html_label_text' => __( 'Transaction description', 'pronamic_ideal' ),
 							/* translators: %s: <code>{tag}</code> */
 							'html_help_text'  => sprintf( __( 'Available tags: %s', 'pronamic_ideal' ), sprintf( '<code>%s</code>', '{transaction_id}' ) ),
 							'default'         => __( 'Event Espresso transaction {transaction_id}', 'pronamic_ideal' ),
-						)
+						]
 					),
-				),
-			)
+				],
+			]
 		);
 
 		return $form;

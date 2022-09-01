@@ -47,13 +47,13 @@ class EventEspressoHelper {
 	 * @return string
 	 */
 	public static function get_description( $transaction_id, $gateway ) {
-		$search = array(
+		$search = [
 			'{transaction_id}',
-		);
+		];
 
-		$replace = array(
+		$replace = [
 			$transaction_id,
-		);
+		];
 
 		$description = '';
 
@@ -76,10 +76,10 @@ class EventEspressoHelper {
 	 */
 	public static function get_customer_from_attendee( $attendee ) {
 		return CustomerHelper::from_array(
-			array(
+			[
 				'name'  => self::get_name_from_attendee( $attendee ),
 				'email' => $attendee->email(),
-			)
+			]
 		);
 	}
 
@@ -91,10 +91,10 @@ class EventEspressoHelper {
 	 */
 	public static function get_name_from_attendee( $attendee ) {
 		return ContactNameHelper::from_array(
-			array(
+			[
 				'first_name' => $attendee->fname(),
 				'last_name'  => $attendee->lname(),
-			)
+			]
 		);
 	}
 }

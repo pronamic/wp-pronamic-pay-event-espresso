@@ -28,11 +28,11 @@
 add_filter(
 	'pronamic_pay_plugin_integrations',
 	function ( $integrations ) {
-        foreach ( $integrations as $integration ) {
-            if ( $integration instanceof \Pronamic\WordPress\Pay\Extensions\EventEspresso\Extension ) {
-                return $integrations;
-            }
-        }
+		foreach ( $integrations as $integration ) {
+			if ( $integration instanceof \Pronamic\WordPress\Pay\Extensions\EventEspresso\Extension ) {
+				return $integrations;
+			}
+		}
 
 		$integrations[] = new \Pronamic\WordPress\Pay\Extensions\EventEspresso\Extension();
 

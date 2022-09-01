@@ -60,9 +60,9 @@ class Gateway extends EE_Offsite_Gateway {
 	 * @link https://github.com/eventespresso/event-espresso-core/blob/4.9.66.p/docs/L--Payment-Methods-and-Gateways/gateway-classes.md
 	 * @var array
 	 */
-	protected $_currencies_supported = array(
+	protected $_currencies_supported = [
 		'EUR',
-	);
+	];
 
 	/**
 	 * Transaction description.
@@ -113,7 +113,7 @@ class Gateway extends EE_Offsite_Gateway {
 	 * @return EEI_Payment
 	 * @throws EE_Error Throws Event Espresso error if gateway or payment can't be initiated.
 	 */
-	public function set_redirection_info( $ee_payment, $billing_info = array(), $return_url = null, $notify_url = null, $cancel_url = null ) {
+	public function set_redirection_info( $ee_payment, $billing_info = [], $return_url = null, $notify_url = null, $cancel_url = null ) {
 		$gateway = Plugin::get_gateway( $this->_config_id );
 
 		if ( ! $gateway ) {
