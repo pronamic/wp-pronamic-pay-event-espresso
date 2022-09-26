@@ -34,11 +34,11 @@ class AddOn extends EE_Addon {
 	public static function register_addon() {
 		class_alias( 'Pronamic\WordPress\Pay\Extensions\EventEspresso\AddOn', 'EE_Pronamic_WP_Pay_AddOn' );
 
-		$payment_methods_paths = array(
+		$payment_methods_paths = [
 			dirname( __FILE__ ) . '/ee/payment-methods/Pronamic',
-		);
+		];
 
-		$payment_methods = array(
+		$payment_methods = [
 			PaymentMethods::ALIPAY        => 'Pronamic_Alipay',
 			PaymentMethods::BANCONTACT    => 'Pronamic_Bancontact',
 			PaymentMethods::BANK_TRANSFER => 'Pronamic_BankTransfer',
@@ -53,7 +53,7 @@ class AddOn extends EE_Addon {
 			PaymentMethods::PAYCONIQ      => 'Pronamic_Payconiq',
 			PaymentMethods::PAYPAL        => 'Pronamic_PayPal',
 			PaymentMethods::SOFORT        => 'Pronamic_Sofort',
-		);
+		];
 
 		foreach ( $payment_methods as $payment_method => $ee_payment_method ) {
 			if ( ! PaymentMethods::is_active( $payment_method ) ) {
@@ -65,13 +65,13 @@ class AddOn extends EE_Addon {
 
 		EE_Register_Addon::register(
 			'pronamic_pay',
-			array(
+			[
 				'version'              => '1.0.0',
 				'min_core_version'     => '4.6.0',
 				'main_file_path'       => dirname( __FILE__ ) . '/ee/EE_Pronamic_WP_Pay_AddOn.php',
 				'class_name'           => 'EE_Pronamic_WP_Pay_AddOn',
 				'payment_method_paths' => $payment_methods_paths,
-			)
+			]
 		);
 	}
 }

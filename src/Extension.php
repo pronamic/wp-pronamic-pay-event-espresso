@@ -42,9 +42,9 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public function __construct() {
 		parent::__construct(
-			array(
+			[
 				'name' => __( 'Event Espresso', 'pronamic_ideal' ),
-			)
+			]
 		);
 
 		// Dependencies.
@@ -59,8 +59,8 @@ class Extension extends AbstractPluginIntegration {
 	 * @return void
 	 */
 	public function setup() {
-		add_filter( 'pronamic_payment_source_text_' . self::SLUG, array( $this, 'source_text' ), 10, 2 );
-		add_filter( 'pronamic_payment_source_description_' . self::SLUG, array( $this, 'source_description' ), 10, 2 );
+		add_filter( 'pronamic_payment_source_text_' . self::SLUG, [ $this, 'source_text' ], 10, 2 );
+		add_filter( 'pronamic_payment_source_description_' . self::SLUG, [ $this, 'source_description' ], 10, 2 );
 
 		// Check if dependencies are met and integration is active.
 		if ( ! $this->is_active() ) {
@@ -68,11 +68,11 @@ class Extension extends AbstractPluginIntegration {
 		}
 
 		// Actions.
-		add_action( 'AHEE__EE_System__load_espresso_addons', array( $this, 'register_addon' ) );
+		add_action( 'AHEE__EE_System__load_espresso_addons', [ $this, 'register_addon' ] );
 
-		add_filter( 'pronamic_payment_source_url_' . self::SLUG, array( $this, 'source_url' ), 10, 2 );
-		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, array( __CLASS__, 'redirect_url' ), 10, 2 );
-		add_action( 'pronamic_payment_status_update_' . self::SLUG, array( $this, 'status_update' ), 10 );
+		add_filter( 'pronamic_payment_source_url_' . self::SLUG, [ $this, 'source_url' ], 10, 2 );
+		add_filter( 'pronamic_payment_redirect_url_' . self::SLUG, [ __CLASS__, 'redirect_url' ], 10, 2 );
+		add_action( 'pronamic_payment_status_update_' . self::SLUG, [ $this, 'status_update' ], 10 );
 	}
 
 	/**
@@ -101,10 +101,10 @@ class Extension extends AbstractPluginIntegration {
 		$ee_payment     = $ee_transaction->last_payment();
 
 		EE_Payment_Processor::instance()->process_ipn(
-			array(
+			[
 				'pronamic_payment_id'     => $payment->get_id(),
 				'pronamic_payment_status' => $payment->get_status(),
-			),
+			],
 			$ee_transaction,
 			$ee_payment->payment_method()
 		);
@@ -153,11 +153,11 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public static function source_text( $text, Payment $payment ) {
 		$url = add_query_arg(
-			array(
+			[
 				'page'   => 'espresso_transactions',
 				'action' => 'view_transaction',
 				'TXN_ID' => $payment->get_source_id(),
-			),
+			],
 			admin_url( 'admin.php' )
 		);
 
@@ -195,11 +195,11 @@ class Extension extends AbstractPluginIntegration {
 	 */
 	public function source_url( $url, Payment $payment ) {
 		return add_query_arg(
-			array(
+			[
 				'page'   => 'espresso_transactions',
 				'action' => 'view_transaction',
 				'TXN_ID' => $payment->get_source_id(),
-			),
+			],
 			admin_url( 'admin.php' )
 		);
 	}

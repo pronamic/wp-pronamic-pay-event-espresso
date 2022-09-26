@@ -1,0 +1,13 @@
+{
+	"core": null,
+	"plugins": [
+		".",
+		"../../../",
+		"https://github.com/pronamic/eventespresso/releases/download/4.10.38.p/event-espresso-core-reg-4.10.38.p.zip",
+		"https://downloads.wordpress.org/plugin/query-monitor.zip",
+		"https://downloads.wordpress.org/plugin/one-time-login.zip"
+	],
+	"config": {
+		"PRONAMIC_PAY_DEBUG": true
+	}
+}
