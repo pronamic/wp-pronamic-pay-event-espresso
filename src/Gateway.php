@@ -201,7 +201,7 @@ class Gateway extends EE_Offsite_Gateway {
 			$error_message = sprintf(
 				/* translators: %s: error message */
 				__( 'Errors communicating with gateway: %s', 'pronamic_ideal' ),
-				implode( ',', $e->getMessage() )
+				$e->getMessage()
 			);
 
 			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
