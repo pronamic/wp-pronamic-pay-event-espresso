@@ -35,7 +35,7 @@ class AddOn extends EE_Addon {
 		class_alias( 'Pronamic\WordPress\Pay\Extensions\EventEspresso\AddOn', 'EE_Pronamic_WP_Pay_AddOn' );
 
 		$payment_methods_paths = [
-			dirname( __FILE__ ) . '/ee/payment-methods/Pronamic',
+			__DIR__ . '/ee/payment-methods/Pronamic',
 		];
 
 		$payment_methods = [
@@ -60,7 +60,7 @@ class AddOn extends EE_Addon {
 				continue;
 			}
 
-			$payment_methods_paths[] = dirname( __FILE__ ) . '/ee/payment-methods/' . $ee_payment_method;
+			$payment_methods_paths[] = __DIR__ . '/ee/payment-methods/' . $ee_payment_method;
 		}
 
 		EE_Register_Addon::register(
@@ -68,7 +68,7 @@ class AddOn extends EE_Addon {
 			[
 				'version'              => '1.0.0',
 				'min_core_version'     => '4.6.0',
-				'main_file_path'       => dirname( __FILE__ ) . '/ee/EE_Pronamic_WP_Pay_AddOn.php',
+				'main_file_path'       => __DIR__ . '/ee/EE_Pronamic_WP_Pay_AddOn.php',
 				'class_name'           => 'EE_Pronamic_WP_Pay_AddOn',
 				'payment_method_paths' => $payment_methods_paths,
 			]
