@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.2.0] - 2022-12-23
+
+### Composer
+
+- Changed `php` from `>=5.6.20` to `>=8.0`.
+- Changed `wp-pay/core` from `^4.5` to `v4.6.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.1.2
+Full set of changes: [`4.1.2...4.2.0`][4.2.0]
+
+[4.2.0]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.1.2...v4.2.0
+
 ## [4.1.2] - 2022-11-07
 - Fixed "Expected type 'null|array'. Found 'string'.".
 
