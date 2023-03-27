@@ -4,6 +4,7 @@
 	"keywords": ["wordpress", "wp", "pay", "event-espresso", "event", "events", "espresso", "extension", "pronamic"],
 	"homepage": "http://www.wp-pay.org/extensions/event-espresso/",
 	"license": "GPL-3.0-or-later",
+	"type": "wordpress-plugin",
 	"authors": [
 		{
 			"name": "Pronamic",
