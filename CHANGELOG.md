@@ -7,6 +7,18 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.2.2] - 2023-03-27
+
+### Commits
+
+- Set Composer type to WordPress plugin. ([3579839](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/357983911a07398dc8c5ba12b8d3ea2495d18af2))
+- Updated .gitattributes ([c6ed85a](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/c6ed85afb657875b3bee17b5ad4b47f8f197899a))
+- Requires PHP: 7.4. ([36ea581](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/36ea581395b04ff17f16e1d3097c8da0ddd9989b))
+
+Full set of changes: [`4.2.1...4.2.2`][4.2.2]
+
+[4.2.2]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.2.1...v4.2.2
+
 ## [4.2.1] - 2023-01-31
 ### Composer
 
