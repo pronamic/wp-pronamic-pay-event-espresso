@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.2.3] - 2023-06-01
+
+### Commits
+
+- Switch from `pronamic/wp-deployer` to `pronamic/pronamic-cli`. ([078fa8c](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/078fa8c8e4d34b486828200ebe76dde9a5cb5ed3))
+- Updated .gitattributes ([f491f44](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/f491f449bfbd25c6c1fc956f38f5a781dbfe4055))
+
+Full set of changes: [`4.2.2...4.2.3`][4.2.3]
+
+[4.2.3]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.2.2...v4.2.3
+
 ## [4.2.2] - 2023-03-27
 
 ### Commits
