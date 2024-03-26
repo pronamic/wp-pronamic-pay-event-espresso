@@ -7,6 +7,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.2.4] - 2024-03-26
+
+### Changed
+
+- Fixed "All output should be run through an escaping function". ([f71ca74](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/f71ca74367fca18a149d7b55c1feaafce2b776ac))
+
+### Composer
+
+- Changed `php` from `>=7.4` to `>=8.0`.
+- Changed `wp-pay/core` from `^4.6` to `v4.16.0`.
+	Release notes: https://github.com/pronamic/wp-pay-core/releases/tag/v4.16.0
+
+Full set of changes: [`4.2.3...4.2.4`][4.2.4]
+
+[4.2.4]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.2.3...v4.2.4
+
 ## [4.2.3] - 2023-06-01
 
 ### Commits
