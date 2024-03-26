@@ -120,7 +120,7 @@ class Gateway extends EE_Offsite_Gateway {
 			$error = Plugin::get_default_error_message();
 
 			// @link https://github.com/eventespresso/event-espresso-core/blob/4.6.18.p/caffeinated/payment_methods/Mijireh/EEG_Mijireh.gateway.php#L147
-			throw new EE_Error( $error );
+			throw new EE_Error( \esc_html( $error ) );
 		}
 
 		$transaction = $ee_payment->transaction();
@@ -206,7 +206,7 @@ class Gateway extends EE_Offsite_Gateway {
 
 			EE_Error::add_error( $error_message, __FILE__, __FUNCTION__, __LINE__ );
 
-			throw new EE_Error( $error_message );
+			throw new EE_Error( \esc_html( $error_message ) );
 		}
 
 		return $ee_payment;
