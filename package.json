@@ -1,44 +1,44 @@
 {
-  "name": "event-espresso",
-  "version": "4.2.4",
-  "description": "Event Espresso driver for the WordPress payment processing library.",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wp-pay-extensions/event-espresso"
-  },
-  "keywords": [
-    "wordpress",
-    "wp",
-    "pay",
-    "event-espresso",
-    "event",
-    "events",
-    "espresso",
-    "gateway",
-    "pronamic"
-  ],
-  "author": {
-    "name": "Pronamic",
-    "email": "info@pronamic.nl",
-    "url": "http://www.pronamic.nl/"
-  },
-  "contributors": [
-    {
-      "name": "Remco Tolsma",
-      "email": "info@remcotolsma.nl",
-      "url": "http://www.remcotolsma.nl/"
-    }
-  ],
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/wp-pay-extensions/event-espresso/issues"
-  },
-  "homepage": "http://www.wp-pay.org/extensions/event-espresso/",
-  "devDependencies": {
-    "@wordpress/env": "^10.0.0"
-  },
-  "scripts": {
-    "start": "wp-env start",
-    "login": "wp-env run cli wp user one-time-login admin"
-  }
+	"name": "event-espresso",
+	"version": "4.2.4",
+	"description": "Event Espresso driver for the WordPress payment processing library.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/wp-pay-extensions/event-espresso"
+	},
+	"keywords": [
+		"wordpress",
+		"wp",
+		"pay",
+		"event-espresso",
+		"event",
+		"events",
+		"espresso",
+		"gateway",
+		"pronamic"
+	],
+	"author": {
+		"name": "Pronamic",
+		"email": "info@pronamic.nl",
+		"url": "http://www.pronamic.nl/"
+	},
+	"contributors": [
+		{
+			"name": "Remco Tolsma",
+			"email": "info@remcotolsma.nl",
+			"url": "http://www.remcotolsma.nl/"
+		}
+	],
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/wp-pay-extensions/event-espresso/issues"
+	},
+	"homepage": "http://www.wp-pay.org/extensions/event-espresso/",
+	"devDependencies": {
+		"@wordpress/env": "^10.0.0"
+	},
+	"scripts": {
+		"start": "wp-env start",
+		"login": "wp-env run cli wp user one-time-login admin"
+	}
 }
