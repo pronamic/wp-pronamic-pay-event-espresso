@@ -39,9 +39,8 @@ class SofortPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new SofortGateway();
-		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::SOFORT );
-		$this->_default_button_url = plugins_url( 'images/sofort/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new SofortGateway();
+		$this->_pretty_name = PaymentMethods::get_name( PaymentMethods::SOFORT );
 
 		parent::__construct( $pm_instance );
 	}

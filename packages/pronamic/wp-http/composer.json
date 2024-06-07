@@ -1,0 +1,59 @@
+{
+	"name": "pronamic/wp-http",
+	"description": "WordPress HTTP library.",
+	"type": "wordpress-plugin",
+	"autoload": {
+		"psr-4": {
+			"Pronamic\\WordPress\\Http\\": "src"
+		}
+	},
+	"config": {
+		"sort-packages": true,
+		"allow-plugins": {
+			"roots/wordpress-core-installer": true,
+			"bamarni/composer-bin-plugin": true,
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"require": {
+		"php": ">=7.4"
+	},
+	"require-dev": {
+		"automattic/wordbless": "^0.3 || ^0.4",
+		"bamarni/composer-bin-plugin": "^1.4",
+		"php-coveralls/php-coveralls": "^2.4",
+		"phpmd/phpmd": "^2.9",
+		"pronamic/pronamic-cli": "^1.1",
+		"pronamic/wp-coding-standards": "^2.2",
+		"roots/wordpress": "^6.0",
+		"yoast/phpunit-polyfills": "^1.0"
+	},
+	"scripts": {
+		"coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text",
+		"coverage-clover": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-clover build/logs/clover.xml",
+		"coverage-html": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-html build/coverage-html",
+		"coverage-text": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text",
+		"coveralls": "vendor/bin/php-coveralls -v",
+		"phpcbf": "XDEBUG_MODE=off vendor/bin/phpcbf",
+		"phpcs": "XDEBUG_MODE=off vendor/bin/phpcs -s -v",
+		"phplint": "find src tests -name '*.php' | xargs -n 1 -P 4 php -l",
+		"phpmd": "vendor/bin/phpmd src,tests text phpmd.ruleset.xml --suffixes php",
+		"phpstan": "XDEBUG_MODE=off vendor/bin/phpstan analyse --memory-limit=-1",
+		"phpunit": "XDEBUG_MODE=off vendor/bin/phpunit",
+		"post-install-cmd": [
+			"echo 'Optionally run: composer bin all install'",
+			"mkdir -p wordpress/wp-content && cp vendor/automattic/wordbless/src/dbless-wpdb.php wordpress/wp-content/db.php"
+		],
+		"post-update-cmd": [
+			"echo 'Optionally run: composer bin all update'",
+			"mkdir -p wordpress/wp-content && cp vendor/automattic/wordbless/src/dbless-wpdb.php wordpress/wp-content/db.php"
+		],
+		"psalm": "vendor/bin/psalm",
+		"phpdoc": "XDEBUG_MODE=off vendor/bin/phpdoc --setting='guides.enabled=true'",
+		"build-docs": [
+			"XDEBUG_MODE=off vendor/bin/wp-documentor parse ./src/ --format=phpdocumentor-rst --type=actions > docs/actions.rst",
+			"XDEBUG_MODE=off vendor/bin/wp-documentor parse ./src/ --format=phpdocumentor-rst --type=filters > docs/filters.rst",
+			"@phpdoc"
+		]
+	}
+}

@@ -39,9 +39,8 @@ class BitcoinPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new BitcoinGateway();
-		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::BITCOIN );
-		$this->_default_button_url = plugins_url( 'images/bitcoin/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new BitcoinGateway();
+		$this->_pretty_name = PaymentMethods::get_name( PaymentMethods::BITCOIN );
 
 		parent::__construct( $pm_instance );
 	}

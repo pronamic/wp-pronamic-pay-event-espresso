@@ -39,9 +39,8 @@ class IDealPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new IDealGateway();
-		$this->_pretty_name        = __( 'iDEAL', 'pronamic_ideal' );
-		$this->_default_button_url = plugins_url( 'images/ideal/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new IDealGateway();
+		$this->_pretty_name = __( 'iDEAL', 'pronamic_ideal' );
 
 		parent::__construct( $pm_instance );
 	}

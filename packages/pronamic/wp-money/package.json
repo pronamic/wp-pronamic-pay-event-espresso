@@ -1,0 +1,21 @@
+{
+	"name": "wp-money",
+	"version": "2.4.3",
+	"description": "WordPress Money library.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pronamic/wp-money.git"
+	},
+	"keywords": [
+		"pronamic",
+		"wordpress",
+		"money",
+		"currency",
+		"currencies"
+	],
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/pronamic/wp-money/issues"
+	},
+	"homepage": "https://github.com/pronamic/wp-money#readme"
+}

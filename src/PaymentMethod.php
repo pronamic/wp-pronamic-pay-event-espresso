@@ -49,9 +49,8 @@ class PaymentMethod extends EE_PMT_Base {
 	 */
 	public function __construct( $pm_instance = null ) {
 		if ( null === $this->payment_method ) {
-			$this->_gateway            = new Gateway();
-			$this->_pretty_name        = __( 'Pronamic', 'pronamic_ideal' );
-			$this->_default_button_url = plugins_url( 'images/credit-card/icon-64x48.png', Plugin::$file );
+			$this->_gateway     = new Gateway();
+			$this->_pretty_name = __( 'Pronamic', 'pronamic_ideal' );
 		}
 
 		parent::__construct( $pm_instance );

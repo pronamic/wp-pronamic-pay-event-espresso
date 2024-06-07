@@ -1,0 +1,78 @@
+{
+	"$id": "https://github.com/pronamic/wp-pronamic-pay-mollie/blob/master/json-schemas/line.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Mollie order line.",
+	"type": "object",
+	"properties": {
+		"resource": {
+			"description": "Indicates the response contains an order line. Will always contain `orderline` for this endpoint.",
+			"type": "string",
+			"const": "orderline"
+		},
+		"id": {
+			"description": "The order line's unique identifier.",
+			"type": "string"
+		},
+		"type": {
+			"description": "The type of product bought, for example, a physical or a digital product.",
+			"type": "string",
+			"enum": [ "physical", "discount", "digital", "shipping_fee", "store_credit", "gift_card", "surcharge" ]
+		},
+		"category": {
+			"description": "The category of product bought.",
+			"type": "string",
+			"enum": [ "meal", "eco", "gift" ]
+		},
+		"name": {
+			"description": "A description of the order line, for example LEGO 4440 Forest Police Station.",
+			"type": "string"
+		},
+		"quantity": {
+			"description": "The number of items in the order line.",
+			"type": "integer"
+		},
+		"unitPrice": {
+			"description": "The price of a single item including VAT in the order line.",
+			"$ref": "amount.json"
+		},
+		"discountAmount": {
+			"description": "Any discounts applied to the order line.",
+			"$ref": "amount.json"
+		},
+		"totalAmount": {
+			"description": "The total amount of the line, including VAT and discounts.",
+			"$ref": "amount.json"
+		},
+		"vatRate": {
+			"description": "The VAT rate applied to the order line, for example '21.00' for 21%.",
+			"type": "string"
+		},
+		"vatAmount": {
+			"description": "The amount of value-added tax on the line.",
+			"$ref": "amount.json"
+		},
+		"sku": {
+			"description": "The SKU, EAN, ISBN or UPC of the product sold. The maximum character length is 64.",
+			"type": [ "string", "null" ]
+		},
+		"imageUrl": {
+			"description": "A link pointing to an image of the product sold.",
+			"type": "string"
+		},
+		"productUrl": {
+			"description": "A link pointing to the product page in your web shop of the product sold.",
+			"type": "string"
+		},
+		"metadata": {
+			"description": "Provide any data you like, for example a string or a JSON object."
+		}
+	},
+	"required": [
+		"name",
+		"quantity",
+		"unitPrice",
+		"totalAmount",
+		"vatRate",
+		"vatAmount"
+	]
+}

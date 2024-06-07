@@ -1,0 +1,21 @@
+{
+	"name": "wp-datetime",
+	"version": "2.1.7",
+	"description": "WordPress DateTime library.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pronamic/wp-datetime.git"
+	},
+	"keywords": [
+		"pronamic",
+		"wordpress",
+		"datetime",
+		"date",
+		"time"
+	],
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/pronamic/wp-datetime/issues"
+	},
+	"homepage": "https://github.com/pronamic/wp-datetime#readme"
+}

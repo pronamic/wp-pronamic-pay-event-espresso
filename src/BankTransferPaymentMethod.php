@@ -39,9 +39,8 @@ class BankTransferPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new BankTransferGateway();
-		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::BANK_TRANSFER );
-		$this->_default_button_url = plugins_url( 'images/bank-transfer/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new BankTransferGateway();
+		$this->_pretty_name = PaymentMethods::get_name( PaymentMethods::BANK_TRANSFER );
 
 		parent::__construct( $pm_instance );
 	}
