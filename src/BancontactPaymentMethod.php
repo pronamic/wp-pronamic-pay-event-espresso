@@ -39,9 +39,8 @@ class BancontactPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new BancontactGateway();
-		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::BANCONTACT );
-		$this->_default_button_url = plugins_url( 'images/bancontact/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new BancontactGateway();
+		$this->_pretty_name = PaymentMethods::get_name( PaymentMethods::BANCONTACT );
 
 		parent::__construct( $pm_instance );
 	}

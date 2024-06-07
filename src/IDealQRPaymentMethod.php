@@ -39,9 +39,8 @@ class IDealQRPaymentMethod extends PaymentMethod {
 	 * @param EE_Payment_Method $pm_instance Event Espresso payment method instance.
 	 */
 	public function __construct( $pm_instance = null ) {
-		$this->_gateway            = new IDealQRGateway();
-		$this->_pretty_name        = PaymentMethods::get_name( PaymentMethods::IDEALQR );
-		$this->_default_button_url = plugins_url( 'images/ideal-qr/icon-64x48.png', Plugin::$file );
+		$this->_gateway     = new IDealQRGateway();
+		$this->_pretty_name = PaymentMethods::get_name( PaymentMethods::IDEALQR );
 
 		parent::__construct( $pm_instance );
 	}
