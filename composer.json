@@ -1,7 +1,17 @@
 {
 	"name": "wp-pay-extensions/event-espresso",
 	"description": "Event Espresso driver for the WordPress payment processing library.",
-	"keywords": ["wordpress", "wp", "pay", "event-espresso", "event", "events", "espresso", "extension", "pronamic"],
+	"keywords": [
+		"wordpress",
+		"wp",
+		"pay",
+		"event-espresso",
+		"event",
+		"events",
+		"espresso",
+		"extension",
+		"pronamic"
+	],
 	"homepage": "http://www.wp-pay.org/extensions/event-espresso/",
 	"license": "GPL-3.0-or-later",
 	"type": "wordpress-plugin",
