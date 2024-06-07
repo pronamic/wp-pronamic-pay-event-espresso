@@ -1,12 +1,17 @@
 {
 	"core": null,
 	"plugins": [
-		".",
-		"../../../",
-		"https://github.com/pronamic/eventespresso/releases/download/4.10.38.p/event-espresso-core-reg-4.10.38.p.zip",
+		"pronamic/wp-env-quick-login",
+		"pronamic/wp-pronamic-pay-test-helper",
+		"https://downloads.wordpress.org/plugin/pronamic-client.zip",
 		"https://downloads.wordpress.org/plugin/query-monitor.zip",
-		"https://downloads.wordpress.org/plugin/one-time-login.zip"
+		"https://downloads.wordpress.org/plugin/one-time-login.zip",
+		"https://downloads.wordpress.org/plugin/wp-plugin-dependencies.zip",
+		"https://github.com/pronamic/eventespresso/releases/download/4.10.38.p/event-espresso-core-reg-4.10.38.p.zip"
 	],
+	"mappings": {
+		"wp-content/plugins/pronamic-pay-event-espresso": "."
+	},
 	"config": {
 		"PRONAMIC_PAY_DEBUG": true
 	}
