@@ -4,7 +4,7 @@
  * Plugin URI: https://www.pronamic.eu/plugins/pronamic-pay-event-espresso/
  * Description: Extend the Pronamic Pay plugin with Event Espresso support to receive payments through a variety of payment providers.
  *
- * Version: 4.2.4
+ * Version: 4.3.0
  * Requires at least: 4.7
  * Requires PHP: 7.4
  *

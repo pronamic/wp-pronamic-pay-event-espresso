@@ -7,6 +7,31 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.0] - 2024-06-07
+
+### Changed
+
+- Please note: In the "Pronamic Pay" plugin, all images have been removed from the `wp-content/plugins/pronamic-ideal/images/` folder. Users who use images from this folder for the Event Espresso payment methods button URL settings will need to update their settings. Users can upload images to their WordPress media library themselves. Logos and icons of popular payment methods can be found at https://github.com/pronamic/wp-pay-logos.
+
+### Removed
+
+- Removed the Pronamic gateway deafult icon URL.
+
+### Commits
+
+- No longer use files from plugin directory `pronamic-ideal/images`. ([fa893a6](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/fa893a6458f134d18e94d50a44045adfc0eaeabd))
+- Make standalone plugin for easier development and testing. ([31e388c](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/31e388ce1d44883581912587a0e608ecf8001c0d))
+
+### Composer
+
+- Added `automattic/jetpack-autoloader` `^3.0`.
+- Added `composer/installers` `^2.2`.
+- Added `woocommerce/action-scheduler` `^3.8`.
+
+Full set of changes: [`4.2.4...4.3.0`][4.3.0]
+
+[4.3.0]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.2.4...v4.3.0
+
 ## [4.2.4] - 2024-03-26
 
 ### Changed
