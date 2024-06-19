@@ -7,6 +7,18 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.1] - 2024-06-19
+
+### Commits
+
+- Updated .gitattributes ([abb558f](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/abb558feac90d52300bc428da2e2752b89737b0a))
+- Updated .gitattributes ([3778601](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/377860153ff92acb523ae8f71136ec61daf518fc))
+- Updated .gitattributes ([1278489](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/12784896761e093d3dc709fa231596823b1d84ab))
+
+Full set of changes: [`4.3.0...4.3.1`][4.3.1]
+
+[4.3.1]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.3.0...v4.3.1
+
 ## [4.3.0] - 2024-06-07
 
 ### Changed
