@@ -3,7 +3,7 @@
  * Addon
  *
  * @author    Pronamic <info@pronamic.eu>
- * @copyright 2005-2023 Pronamic
+ * @copyright 2005-2024 Pronamic
  * @license   GPL-3.0-or-later
  * @package   Pronamic\WordPress\Pay\Extensions\EventEspresso
  */
@@ -17,7 +17,7 @@ use Pronamic\WordPress\Pay\Core\PaymentMethods;
 /**
  * Title: WordPress pay Event Espresso addon
  * Description:
- * Copyright: 2005-2023 Pronamic
+ * Copyright: 2005-2024 Pronamic
  * Company: Pronamic
  *
  * @author  Remco Tolsma
