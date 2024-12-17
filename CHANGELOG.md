@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.2] - 2024-12-17
+
+### Commits
+
+- Happy 2024. ([94544e9](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/94544e97685a03bb1302edab38c2b8c2f1741895))
+
+Full set of changes: [`4.3.1...4.3.2`][4.3.2]
+
+[4.3.2]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.3.1...v4.3.2
+
 ## [4.3.1] - 2024-06-19
 
 ### Commits
