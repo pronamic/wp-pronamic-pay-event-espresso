@@ -7,6 +7,17 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.3] - 2025-06-19
+
+### Composer
+
+- Changed `automattic/jetpack-autoloader` from `^3.0` to `v5.0.7`.
+	Release notes: https://github.com/Automattic/jetpack-autoloader/releases/tag/v5.0.7
+
+Full set of changes: [`4.3.2...4.3.3`][4.3.3]
+
+[4.3.3]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.3.2...v4.3.3
+
 ## [4.3.2] - 2024-12-17
 
 ### Commits
