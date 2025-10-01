@@ -43,7 +43,7 @@ class Extension extends AbstractPluginIntegration {
 	public function __construct() {
 		parent::__construct(
 			[
-				'name' => __( 'Event Espresso', 'pronamic_ideal' ),
+				'name' => 'Event Espresso',
 			]
 		);
 
