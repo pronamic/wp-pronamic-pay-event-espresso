@@ -7,6 +7,16 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.3.4] - 2025-11-11
+
+### Commits
+
+- Added this point we shoud not use translation functions. ([248ffdd](https://github.com/pronamic/wp-pronamic-pay-event-espresso/commit/248ffddcde559f21590d4838fcb5a5c9a120a118))
+
+Full set of changes: [`4.3.3...4.3.4`][4.3.4]
+
+[4.3.4]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.3.3...v4.3.4
+
 ## [4.3.3] - 2025-06-19
 
 ### Composer
