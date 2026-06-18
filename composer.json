@@ -75,7 +75,7 @@
 		"php": ">=8.0",
 		"automattic/jetpack-autoloader": "^3.0 || ^4.0 || ^5.0",
 		"composer/installers": "^2.2",
-		"woocommerce/action-scheduler": "^3.8",
+		"woocommerce/action-scheduler": "^3.8 || ^4.0",
 		"wp-pay/core": "^4.16"
 	},
 	"require-dev": {
@@ -85,7 +85,7 @@
 		"phpstan/phpstan": "^1.11",
 		"pronamic/pronamic-cli": "^1.1",
 		"pronamic/wp-coding-standards": "^2.2",
-		"roots/wordpress": "^6.4",
+		"roots/wordpress": "^6.8",
 		"szepeviktor/phpstan-wordpress": "^1.3",
 		"vimeo/psalm": "^5.24",
 		"wp-pay-gateways/mollie": "^4.11",
