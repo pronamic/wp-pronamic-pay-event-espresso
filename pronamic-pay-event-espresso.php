@@ -5,7 +5,7 @@
  * Description: Extend the Pronamic Pay plugin with Event Espresso support to receive payments through a variety of payment providers.
  *
  * Version: 4.3.4
- * Requires at least: 4.7
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  *
  * Author: Pronamic
