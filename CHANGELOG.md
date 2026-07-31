@@ -7,6 +7,22 @@ This projects adheres to [Semantic Versioning](http://semver.org/) and [Keep a C
 ## [Unreleased][unreleased]
 -
 
+## [4.4.0] - 2026-07-31
+
+### Changed
+
+- Increased the minimum required WordPress version to 6.8.
+
+### Composer
+
+- Changed `woocommerce/action-scheduler` from `^3.8` to `^3.8 || ^4.0`.
+	Action Scheduler `4.0.0` adds support for the new major version. It introduces breaking changes: action arguments are now taken into account when scheduling unique actions, and failed actions are automatically purged after 3 months by default (configurable via the `action_scheduler_retention_period_for_failed` filter).
+	Release notes: https://github.com/woocommerce/action-scheduler/releases/tag/4.0.0
+
+Full set of changes: [`4.3.4...4.4.0`][4.4.0]
+
+[4.4.0]: https://github.com/pronamic/wp-pronamic-pay-event-espresso/compare/v4.3.4...v4.4.0
+
 ## [4.3.4] - 2025-11-11
 
 ### Commits
